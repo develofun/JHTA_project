@@ -1,0 +1,102 @@
+@CHARSET "UTF-8";
+
+.member_img {
+	width: 250px;
+	height: 120px;
+	padding: 10px;
+}
+
+.member_img img {
+	width: 250px;
+	height: 120px;
+}
+
+.member_content {
+	width: 250px;
+	height: 100px;
+	padding: 10px;
+}
+
+.member_content a {
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
+.member_content a:hover {
+	color: #D5D5D5;
+}
+
+.member_content span {
+	color: black;
+	font-size: 12px;
+}
+
+#wrap {
+	width:1000px;
+	height:1400px;
+	margin: auto;
+}
+
+/*베스트3*/
+#wrap #memberlist #best_member_alldiv {
+	width: 960px;
+	height: 340px;
+	margin: 10px;
+	padding: 10px;
+}
+
+#wrap #memberlist #best_member_alldiv #best_member_title {
+	width: 960px;
+	height: 40px;
+}
+/*회원공구베스트 div class*/
+#wrap #memberlist #best_member_alldiv .best_member {
+	width: 270px;
+	height: 220px;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: white;
+}
+
+/*전체리스트*/
+#wrap #memberlist #member_list_all {
+	width:960px;
+	margin:10px;
+	padding:10px;
+}
+
+#wrap #memberlist #member_list_all .list_all_member {
+	width:250px;
+	height:350px;
+	float:left;
+	margin:20px;
+	padding:10px;
+	white-space:nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	border-radius:5px;
+	background-color: white;
+}
+
+/*카테고리 검색 시 생성되는 div스타일*/
+#wrap #memberlist #member_list_all .category_all_member {
+	width:250px;
+	height:350px;
+	float:left;
+	margin:20px;
+	padding:10px;
+	white-space:nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	border-radius:5px;
+	background-color: white;
+}
+
+#wrap #memberlist #member_list_all #list_all_category {
+	width:900px;
+	height:80px;
+	float:left;
+}

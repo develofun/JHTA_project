@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.ShopItemMapper">
+	<select id="sideBar" parameterType="int" resultType="String">
+      select distinct shop_item_mainimg_imgname from tb_shop_item_subimg where shop_item_code=#{value}
+   </select>
+	<!-- 카트에 동일 상품 있는지 확인 -->
+	<select id="cartSearch" parameterType="shopCartVo" resultType="int">
+		select nvl(count(*),0) from tb_shop_cart where member_privacy_id=#{member_privacy_id} and shop_item_code=#{shop_item_code}
+		<if test="item_options_num !=null and item_options_num!=0">
+			and item_options_num=#{item_options_num}
+		</if>
+	</select>
+	
+	<!-- 카트에 동일 상품 있을 경우 갯수만 추가 -->
+	<update id="cartUpdate" parameterType="shopCartVo">
+		update tb_shop_cart set shop_cart_order_qty=shop_cart_order_qty+#{shop_cart_order_qty} where MEMBER_PRIVACY_ID=#{member_privacy_id} and shop_item_code=#{shop_item_code}
+		<if test="item_options_num !=null and item_options_num!=0">
+			and item_option_num=#{item_options_num}
+		</if>
+	</update>
+	
+	<!-- 회원정보 가져오기 -->
+	<select id="getMember_info" parameterType="string" resultType="tbMemberPrivacyVo">
+		select * from tb_member_privacy where member_privacy_id=#{value}
+	</select>
+	
+	<!-- 쿠폰정보 가져오기 -->
+	<select id="getMyCoupon" parameterType="string" resultType="tbCouponMyCouponVo">
+		select m.coupon_mycoupon_num,m.coupon_mycoupon_qty,c.coupon_num,m.member_privacy_id,m.coupon_startDate,
+		m.coupon_endDate,c.coupon_subject,c.coupon_discount,c.coupon_value,c.coupon_validity
+		from tb_coupon_mycoupon m,tb_coupon c 
+		where m.coupon_num=c.coupon_num and member_privacy_id=#{value}
+	</select>
+	
+	<!-- 사용가능한 쿠폰 가져오기 -->
+	<select id="getUsablecp" parameterType="string" resultType="tbCouponMyCouponVo">
+		select m.coupon_mycoupon_num,m.coupon_mycoupon_qty,c.coupon_num,m.member_privacy_id,m.coupon_startDate,
+		m.coupon_endDate,c.coupon_subject,c.coupon_discount,c.coupon_value,c.coupon_validity
+		from tb_coupon_mycoupon m,tb_coupon c 
+		<![CDATA[where m.coupon_num=c.coupon_num and member_privacy_id=#{value} and m.coupon_startDate<=sysdate and m.coupon_endDate>=sysdate]]>
+	</select>
+	
+	<!-- 쿠폰상세정보 -->
+	<select id="getCouponInfo" parameterType="int" resultType="tbCouponMyCouponVo">
+		select m.coupon_mycoupon_num,m.coupon_mycoupon_qty,c.coupon_num,m.member_privacy_id,m.coupon_startDate,
+		m.coupon_endDate,c.coupon_subject,c.coupon_discount,c.coupon_value,c.coupon_validity
+		from tb_coupon_mycoupon m,tb_coupon c 
+		where m.coupon_num=c.coupon_num and m.coupon_mycoupon_num=#{value}
+	</select>
+	
+	<!-- 쿠폰갯수 가져오기 -->
+	<select id="mycouponQty" parameterType="string" resultType="int">
+		select nvl(sum(coupon_mycoupon_qty),0) from tb_coupon_mycoupon where member_privacy_id=#{value}
+	</select>
+	<!--  제품상세정보 -->
+	<select id="getInfo" parameterType="int" resultType="shopItemVo">
+		select * from TB_shop_item where shop_item_code=#{value}
+	</select>
+	
+	<!--  제품상세정보/서브이미지 -->
+	<select id="getSubImg" parameterType="int" resultType="shopSubImgVo">
+		select * from TB_shop_item_subimg where shop_item_code=#{value}
+	</select>
+	
+	<!--  제품상세정보/옵션정보 -->
+	<select id="getOption" parameterType="int" resultType="shopItemOptionVo">
+		select * from TB_item_options where shop_item_code=#{value}
+	</select>
+	
+	<!--  제품상세정보/옵션별 재고수량 -->
+	<select id="getQty" parameterType="int" resultType="int">
+		select ITEM_OPTIONS_QTY from TB_item_options where item_options_num=#{value}
+	</select>
+	
+	
+	<!-- 장바구니 테이블에 추가하기 -->
+   <insert id="addCart" parameterType="shopCartVo">
+      insert into tb_shop_cart values(tb_shop_cart_seq.nextval,#{member_privacy_id},#{shop_item_code},#{item_options_num},#{shop_cart_order_qty},#{shop_cart_price})
+   </insert>
+	
+	<!-- 장바구니 페이지 이동하기(장바구니 일반상품 데이터) -->
+	<select id="cartList" parameterType="string" resultType="shopCartListVo">
+		select i.shop_item_code,i.shop_item_name,o.item_options_name,s.shop_item_mainimg_imgname,i.shop_item_pointrate,c.shop_cart_order_qty,i.shop_item_saleprice
+		from tb_shop_item i,tb_shop_cart c,tb_item_options o,tb_shop_item_subimg s
+		where i.shop_item_code=c.shop_item_code and c.shop_item_code=s.shop_item_code and c.item_options_num=o.item_options_num and c.member_privacy_id=#{value}
+	</select>
+	
+	<!--    찜 추가하기(일반)-->
+	<insert id="addJjim" parameterType="hashmap">
+		insert into tb_shop_jjim values(shop_jjim_seq.nextval,#{id},#{code})
+	</insert>
+	
+	<!-- 찜목록에 있는지 확인 -->
+	<select id="searchJjim" parameterType="hashmap" resultType="int">
+		select nvl(count(*),0) from tb_shop_jjim where member_privacy_id=#{id} and shop_item_code=#{code}
+	</select>
+	
+	<!-- 상품 바로구매 -->
+	<select id="directOrder" parameterType="hashmap" resultType="shopCartListVo">
+		select DISTINCT i.shop_item_code,i.shop_item_name,o.item_options_num,o.item_options_name,s.shop_item_mainimg_imgname,i.shop_item_pointrate,i.shop_item_saleprice
+		from tb_shop_item i,tb_item_options o,tb_shop_item_subimg s
+		where i.shop_item_code=o.shop_item_code and o.shop_item_code=s.shop_item_code and i.shop_item_code=#{item_code} and o.item_options_num=#{option}
+	</select>
+	
+	<!-- 상품 바로구매(옵션없는상품) -->
+	<select id="dOrder" parameterType="int" resultType="shopCartListVo">
+		select DISTINCT i.shop_item_code,i.shop_item_name,s.shop_item_mainimg_imgname,i.shop_item_pointrate,i.shop_item_saleprice
+		from tb_shop_item i,tb_shop_item_subimg s
+		where i.shop_item_code=s.shop_item_code and i.shop_item_code=#{value}
+	</select>
+	
+	<delete id="deleteCart" parameterType="hashmap">
+		delete from tb_shop_cart where member_privacy_id=#{id} and shop_item_code=#{item_code}
+	</delete>
+	
+     <select id="CategoryList" parameterType="map" resultType="shopItemVo">
+		select * from tb_shop_item where <![CDATA[shop_item_code>=#{categoryStart} and section_num<=#{categoryEnd}]]>
+	</select>
+	
+	<select id="orderNum" resultType="int">
+		select MAX(shop_payment_ordernum) from TB_shop_payment
+	</select>
+	
+	<insert id="addPayment" parameterType="tbShopPaymentVo">
+		insert into TB_shop_payment values(#{SHOP_PAYMENT_ORDERNUM},#{SHOP_PAYMENT_METHOD_PAYMENT},#{SHOP_PAYMENT_COUPON},#{SHOP_PAYMENT_POINT},#{SHOP_PAYMENT_TOTAL_PRICE},#{SHOP_PAYMENT_TOTAL_PAYMENT},sysdate,#{MEMBER_PRIVACY_ID})
+	</insert>
+	
+	<insert id="addPayPd" parameterType="tbShopPaymentProductVo">
+		insert into TB_shop_payment_product values(shop_payment_item_num_seq.nextval,#{SHOP_PAYMENT_ITEM_ORDER_QTY},#{SHOP_PAYMENT_ITEM_PRICE},#{SHOP_PAYMENT_ORDERNUM},#{SHOP_ITEM_CODE},#{ITEM_OPTIONS_NUM})
+	</insert>
+	
+	<select id="getCpAmount" parameterType="int" resultType="int">
+		select c.coupon_discount from TB_coupon c,tb_coupon_mycoupon m where c.coupon_num=m.coupon_num and COUPON_MYCOUPON_NUM=#{value} 
+	</select>
+	
+	<update id="item_sub" parameterType="hashmap">
+		update TB_shop_item set shop_item_stock=shop_item_stock-#{order_qty} where shop_item_code=#{item_code}
+	</update>
+	
+	<update id="option_sub" parameterType="hashmap">
+		update TB_item_options set item_options_qty=item_options_qty-#{order_qty} where item_options_num=#{option_num}
+	</update>
+	
+	<insert id="updatePoint" parameterType="hashmap">
+		insert into TB_member_point values(member_point_num_seq.nextval,#{usepoint},sysdate,#{id},#{reason})
+	</insert>
+	
+	<!-- 쿠폰 사용하기 -->
+	<update id="useCoupon" parameterType="int">
+		update TB_coupon_mycoupon set coupon_mycoupon_qty=coupon_mycoupon_qty-1 where coupon_mycoupon_num=#{value}
+	</update>
+	
+	<insert id="insertDelivery" parameterType="tbShopDeliveryVo">
+		insert into TB_shop_delivery values(#{shop_delivery_tracking}+tracking_seq.nextval,#{shop_order_history},#{shop_delivery_history},#{shop_payment_del_name},#{shop_payment_del_zipcode},#{shop_payment_del_addr},#{shop_payment_del_phone},#{shop_payment_del_message},#{shop_payment_del_price},#{shop_payment_ordernum})
+	</insert>
+	
+	<!-- 주문목록 리스트 -->
+	<select id="orderList" parameterType="hashmap" resultType="tbShopOrderListVo">
+		select * from (select c.*,rownum rnum from (select b.shop_payment_ordernum,b.shop_item_code,b.shop_payment_w_date,i.shop_item_name,b.shop_payment_total_payment,b.shop_order_history,b.shop_delivery_history,b.member_privacy_id 
+		from (select a.shop_payment_ordernum,a.shop_item_code,p.shop_payment_total_payment,p.shop_payment_w_date,d.shop_order_history,d.shop_delivery_history,p.member_privacy_id 
+		from (select distinct shop_payment_ordernum,shop_item_code 
+		from TB_shop_payment_product order by shop_payment_ordernum desc)a,TB_shop_payment p,TB_shop_delivery d 
+			where a.shop_payment_ordernum=p.shop_payment_ordernum and a.shop_payment_ordernum=d.shop_payment_ordernum and p.member_privacy_id=#{id} 
+		<if test="start_date !=null and start_date !=''">
+			<![CDATA[ and p.shop_payment_w_date<=to_date(#{end_date})+1 and p.shop_payment_w_date>=#{start_date}]]>
+		</if>
+			) b,TB_shop_item i 
+		where b.shop_item_code=i.shop_item_code order by b.shop_payment_w_date desc)c) <![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	
+	<select id="order_desc" parameterType="int" resultType="shopOrderDescVo">
+      	select distinct aa.*,i.SHOP_ITEM_NAME,i.shop_item_saleprice,s.SHOP_ITEM_MAINIMG_IMGNAME,o.item_options_name
+      	from 
+        (select pd.shop_payment_item_num,p.SHOP_PAYMENT_W_DATE,d.SHOP_DELIVERY_HISTORY,d.SHOP_DELIVERY_TRACKING,d.SHOP_PAYMENT_DEL_NAME,d.SHOP_PAYMENT_DEL_PHONE,d.SHOP_PAYMENT_DEL_ADDR,p.SHOP_PAYMENT_COUPON,p.SHOP_PAYMENT_POINT,p.SHOP_PAYMENT_TOTAL_PRICE,m.PAYMENT_METHOD,pd.SHOP_ITEM_CODE,pd.ITEM_OPTIONS_num,pd.SHOP_PAYMENT_ITEM_ORDER_QTY
+        from tb_shop_payment p,tb_shop_payment_product pd,tb_shop_delivery d,tb_payment_method m
+        where p.shop_payment_ordernum=pd.shop_payment_ordernum and pd.shop_payment_ordernum=d.shop_payment_ordernum and p.SHOP_PAYMENT_METHOD_PAYMENT=m.PAYMENT_METHOD_PAYMENT and  p.shop_payment_ordernum=#{value})aa,tb_shop_item i,tb_shop_item_subimg s,tb_item_options o
+      	where aa.shop_item_code=i.shop_item_code and i.shop_item_code=s.shop_item_code and aa.ITEM_OPTIONS_num=o.ITEM_OPTIONS_num
+	</select>
+	   
+	<select id="search_list" parameterType="hashmap" resultType="tbShopOrderListVo">
+	   	select b.shop_payment_ordernum,b.shop_item_code,b.shop_payment_w_date,i.shop_item_name,b.shop_payment_total_payment,b.shop_order_history,b.shop_delivery_history,b.member_privacy_id 
+        from (select a.shop_payment_ordernum,a.shop_item_code,p.shop_payment_total_payment,p.shop_payment_w_date,d.shop_order_history,d.shop_delivery_history,p.member_privacy_id 
+        from (select distinct shop_payment_ordernum,shop_item_code 
+        from TB_shop_payment_product order by shop_payment_ordernum desc)a,TB_shop_payment p,TB_shop_delivery d 
+        where a.shop_payment_ordernum=p.shop_payment_ordernum and a.shop_payment_ordernum=d.shop_payment_ordernum and p.member_privacy_id=#{id} and <![CDATA[ p.shop_payment_w_date<=#{end_date}+1 and p.shop_payment_w_date>=#{start_date} ]]>) b,TB_shop_item i 
+        where b.shop_item_code=i.shop_item_code
+	</select>
+	
+	<select id="order_count" parameterType="hashmap" resultType="int">
+		select COUNT(*) cnt from (select a.shop_payment_ordernum,p.member_privacy_id
+		from (select distinct shop_payment_ordernum,shop_item_code 
+		from TB_shop_payment_product order by shop_payment_ordernum desc)a,TB_shop_payment p,TB_shop_delivery d 
+		where a.shop_payment_ordernum=p.shop_payment_ordernum and a.shop_payment_ordernum=d.shop_payment_ordernum and p.member_privacy_id=#{id}
+		<if test="start_date !=null and start_date !=''">
+			<![CDATA[ and p.shop_payment_w_date<=TO_DATE(#{end_date},'yyyy-MM-dd') and p.shop_payment_w_date>=TO_DATE(#{start_date},'yyyy-MM-dd')]]>
+		</if>
+		)
+	</select>
+	
+	<insert id="cancel_apply" parameterType="shopCancelVo">
+		insert into TB_shop_cancel values(shop_cancel_seq.nextval,#{reason},#{cancel_history},sysdate,#{member_privacy_id},#{shop_payment_item_num})
+	</insert>
+	
+	<update id="del_history" parameterType="hashmap">
+		update TB_shop_delivery set shop_order_history=#{shop_order_history} where shop_payment_ordernum=#{order_num}
+	</update>
+	<select id="cancelList" parameterType="string" resultType="shopCancelListVo">
+		select distinct c.SHOP_PAYMENT_ITEM_NUM,PD.SHOP_PAYMENT_ORDERNUM,P.SHOP_PAYMENT_W_DATE,C.CANCEL_APPLYDATE,I.SHOP_ITEM_NAME,PD.SHOP_PAYMENT_ITEM_ORDER_QTY,PD.SHOP_PAYMENT_ITEM_PRICE,C.CANCEL_HISTORY,o.ITEM_OPTIONS_NAME
+		FROM TB_SHOP_CANCEL C,TB_SHOP_PAYMENT_PRODUCT PD,TB_SHOP_PAYMENT P,TB_SHOP_ITEM I,tb_item_options o
+		WHERE PD.SHOP_PAYMENT_ORDERNUM=P.SHOP_PAYMENT_ORDERNUM AND PD.SHOP_PAYMENT_ITEM_NUM=C.SHOP_PAYMENT_ITEM_NUM AND I.SHOP_ITEM_CODE=PD.SHOP_ITEM_CODE and PD.ITEM_OPTIONS_NUM=o.ITEM_OPTIONS_NUM AND C.MEMBER_PRIVACY_ID=#{value}
+		order by C.CANCEL_APPLYDATE desc
+	</select>
+	<select id="cancel_chk" parameterType="int" resultType="int">
+		select nvl(count(*),0) from tb_shop_cancel where SHOP_PAYMENT_ITEM_NUM=#{value}
+	</select>
+	<select id="getCancelPage" parameterType="string" resultType="int">
+		select nvl(count(*),0)
+		FROM TB_SHOP_CANCEL
+		WHERE MEMBER_PRIVACY_ID=#{value}
+	</select>
+	<select id="order_totalprice" parameterType="string" resultType="int">
+		select nvl(sum(SHOP_PAYMENT_TOTAL_PAYMENT),0) from tb_shop_payment where member_privacy_id=#{value}
+	</select>
+	<select id="order_totalcount" parameterType="string" resultType="int">
+		select nvl(count(*),0) from tb_shop_payment where member_privacy_id=#{value}
+	</select>
+	<select id="review_count" parameterType="string" resultType="int">
+		select nvl(count(*),0) from TB_SHOP_REVIEW where member_privacy_id=#{value}
+	</select>
+</mapper>

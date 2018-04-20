@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesoloadmin.www.mybatis.MemberMapper">
+  <insert id="join" parameterType="memberVo">
+  	INSERT INTO TB_ADMIN_MEMBER VALUES(
+  	SEQ_ADMIN_MEMBER_NUM,#{ADMIN_MEMBER_CODE},#{ADMIN_MEMBER_ID},
+  	#{ADMIN_MEMBER_PASSWORD},#{ADMIN_MEMBER_NAME},#{ADMIN_MEMBER_BIRTH},
+  	#{ADMIN_MEMBER_PHONE},#{ADMIN_MEMBER_PHONE},#{ADMIN_MEMBER_IP},
+  	#{ADMIN_MEMBER_EMAIL},#{ADMIN_MEMBER_STATE},#{ADMIN_MEMBER_AUTHORITY},
+  	SYSDATE)
+  </insert>
+</mapper>

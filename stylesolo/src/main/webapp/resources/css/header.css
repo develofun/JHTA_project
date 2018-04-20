@@ -1,0 +1,67 @@
+@CHARSET "UTF-8";
+
+#header {
+	width:100%;
+	height: 110px;
+	border: 1px solid;
+}
+
+#logo {
+	weight: 80px;
+	height: 80px;
+	float: left;
+	margin-left: 330px;
+	position: relative;
+	left: 60px;
+	top: 15px;
+}
+
+#menu {
+	float: left;
+	left: 100px;
+	top: 70px;
+	position: relative;
+}
+
+#menu a {
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+	margin-left: 20px;
+}
+
+#menu a:hover {
+	color: #D5D5D5;
+}
+
+#member_menu {
+	float: right;
+	position: relative;
+	right: 380px;
+	top: 10px;
+}
+
+#member_menu a {
+	color: black;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+#member_login {
+	float: right;
+	right: 70px;
+	top: 65px;
+	position: relative;
+}
+
+#member_login #id {
+	width: 90px;
+	height: 8px;
+	padding: 5px;
+}
+
+#member_login #pwd {
+	width: 90px;
+	height: 8px;
+	padding: 5px;
+}

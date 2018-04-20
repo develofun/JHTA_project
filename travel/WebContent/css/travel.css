@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+*{margin: 0px;padding: 0px}
+.header{width:100%;height:153px;background-color:#84ffe8;margin:auto;}
+.contents{width:898px;background-color:white;margin-top:5px;margin:auto;}
+.footer{width:100%;height:100px;clear:both;background-color:#fff6fc;border-top:4px double black;margin:auto;}
+
+
+ /*메인컨텐츠 css*/
+#header_content{width:898px;margin:auto;}
+
+#main_contents_right{float: left; width:599px; height:898px;background-color: white;font-size:12px;margin-top:10px}
+#main_contents_fboard{float: left;margin-left:5px ;width:292px; height:200px; background-color: white}
+#main_contents_fboard_title{float: left;width:290px; height:20px; border-bottom:1px solid gray; font-weight:bold;background-color:#feffdc;}
+#main_contents_fboard_content_image{float:left;width:290px;height:155px;padding-left: 15px}
+#main_contents_fboard_content_image img{margin-top:5px;;width:250px;height:145px;}
+#main_contents_fboard_content_text{float:left;width:286px;height:15px;text-align: center;}
+#main_contents_kboard{float: left; margin-left:5px ; width:292px; height:200px; background-color: white}
+#main_contents_kobard_title{float: left;width:290px; height:20px; border-bottom:1px solid gray; background-color: white;font-weight:bold;background-color:#feffdc}
+#main_contents_kboard_content_image{float:left;width:290px;height:155px;padding-left: 15px}
+#main_contents_kboard_content_image img{margin-top:5px;;width:250px;height:145px;}
+#main_contents_kboard_content_text{float:left;width:286px;height:15px;text-align: center;}
+
+#main_contents_free{float: left; margin-top:5px ;margin-left:5px ;width:590px; height:200px; background-color: }
+#main_contents_free_title{float: left;width:588px; height:20px; border-bottom:1px solid gray; background-color: white;font-weight:bold;background-color:#feffdc}
+
+#main_contents_free_recent{float: left; margin-top:10px ;width:292px; height:150px;}
+#main_contents_free_recent_title{loat: left;width:290px; height:20px; border-bottom:1px solid gray; background-color: white;font-weight:bold;}
+#main_contents_free_recent_content img{width:290px;height:148px}
+#main_contents_free_best{float: left; margin-top:10px ;margin-left:5px ;width:292px; height:150px;}
+#main_contents_free_best_title{loat: left;width:290px; height:20px; border-bottom:1px solid gray; background-color: white;font-weight:bold;}
+#main_contents_free_best_content img{width:290px;height:148px}
+#main_contents_event1{text-align: center;float: left; margin-top:10px ;margin-left:5px ;width:588px; height:30px; border-top:4px double gray;border-bottom:4px double gray;background-color: white;}
+#main_contents_eventSale{margin-left:20px;margin-top:5px;float:left;}
+#main_contents_review{float: left; margin-top:5px ;margin-left:5px ;width:590px; height:200px;}
+#main_contents_review_title{float: left;width:588px; height:20px; border-bottom:1px solid gray; background-color:white;font-weight:bold;background-color:#feffdc}
+#main_contents_market{float: left; margin-top:10px ;margin-left:5px ;width:292px; height:200px;}
+#main_contents_market_title{float: left;width:290px; height:20px; border-bottom:1px solid gray; background-color: white;font-weight:bold;background-color:#feffdc}
+#main_contents_notice{float: left; margin-top:10px ; margin-left:5px ; width:292px; height:200px;}
+#main_contents_notice_title{float: left;width:290px; height:20px; border-bottom:1px solid gray; background-color: white;font-weight:bold;background-color:#feffdc}
+#main_contents_left{float: left; width:299px; height:898px;font-size:12px;margin-top:10px}
+#main_contents_login{float: left;width:299px; height:120px; border-radius:5px;background-color: #f5f5f5;}
+
+ /*상세 로그인 영역 css*/
+#detail_login {width:100%;height:30px;border-radius:5px;background-color:#ebffe7;font-size:14px;font-weight:bold;line-height:30px}
+
+/*헤더 이미지,메뉴바 css*/
+.header ul{list-style:none;margin:0px;padding:0px;text-align:center;}
+.header li a{display:block;width:110.25px;height:42px;line-height:40px;text-decoration:none;font-size:14px;font-weight:bold;background:#ff2946;}
+.header li{float:left;margin-top: 10px} 
+.header li a:link {text-decoration: none; color:white;}
+.header li a:visited {text-decoration: none; color:white;}
+.header {background-image:url("http://www.zialena.com/wp-content/uploads/2013/08/winery2.jpg")}
+.header #main_images{width:200px;height:100px;}
+.header img{width:898px;height:110px;}
+#menu ul li a.on{background: #000;}
+

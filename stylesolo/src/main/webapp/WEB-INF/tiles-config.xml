@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions 
+	PUBLIC "-//Apache Software Foundation//DTD mains Configuration 2.1//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<definition name=".main" template="/WEB-INF/views/layout/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/main.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
+		<!-- <put-attribute name="footer" value="/WEB-INF/views/test/testFooter.jsp"/> -->
+	</definition>
+	
+	<!-- 쇼핑폴더 -->
+	<definition name=".shopping.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/shopping/{1}.jsp"/>
+	</definition>
+	
+	<definition name=".login.*" template="/WEB-INF/views/layout/loginLayout.jsp">
+		<put-attribute name="login_or_join" value="/WEB-INF/views/login/{1}.jsp"/>
+	</definition>
+	
+	<!-- 멤버폴더 -->
+	<definition name=".member.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/member/{1}.jsp"/>
+	</definition>
+	
+	<!-- 공구폴더 -->
+	<definition name=".gonggu.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/gonggu/{1}.jsp"/>
+	</definition>
+	
+	 <!-- 1111 -->
+   <!-- 상품상세 페이지 -->
+   <definition name=".item_desc" template="/WEB-INF/views/shopping/layout/shoplayout.jsp">
+      <put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+      <put-attribute name="main" value="/WEB-INF/views/shopping/main.jsp"/>
+      <put-attribute name="content" value="/WEB-INF/views/shopping/content.jsp"/>
+      <put-attribute name="footer" value="/WEB-INF/views/shopping/footer.jsp"/>
+   </definition>
+   
+   <!-- 쇼핑 주문목록/주문하기/주문상세내역 -->
+   <definition name=".shop.*" extends=".item_desc">
+      <put-attribute name="content" value="/WEB-INF/views/shopping/{1}.jsp"/>
+   </definition>
+	
+	<!-- 회원정보 페이지 -->
+	<definition name=".member" template="/WEB-INF/views/layout/member_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/views/member/member_detail_menu.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/member/member_detail.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
+	</definition>
+	
+	<!-- 회원정보 변경(비밀번호체크) -->
+	<definition name=".checkpwd" extends=".member">
+		<put-attribute name="content" value="/WEB-INF/views/member/member_checkpwd.jsp"/>
+	</definition>
+	
+	<!-- 멤버폴더(멤버layout사용하는jsp파일전용) -->
+	<definition name=".members.*" extends=".member">
+		<put-attribute name="content" value="/WEB-INF/views/member/{1}.jsp"/>
+	</definition>
+	
+		<!-- 이벤트 페이지 -->
+	<definition name=".event.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/event/{1}.jsp"/>
+	</definition>
+	
+	<!-- 고객센터 페이지 -->
+	<definition name=".cs.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/cs/{1}.jsp"/>
+	</definition>
+	
+	
+	<!-- 추천상품 페이지 -->
+	<definition name=".recommend.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/recommend/{1}.jsp"/>
+	</definition>
+	
+</tiles-definitions>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.EventMapper">
+  	<sql id="sort">
+  		<choose>
+			<when test="event_sort!=null">
+				and event_sort=#{event_sort }
+			</when>
+		</choose>		
+  	</sql>
+  	<sql id="cnt">
+  		<choose>
+  			<when test="cnt_detail>0">
+  				and b.event_image_category like '상세'||'%'
+  			</when>
+  		</choose>
+  	</sql>
+  	<select id="get_event_list" resultType="tbEventListVo" parameterType="hashmap">
+  		select * from (select aa.*,rownum rnum from (select a.*, b.event_image_name from tb_event a, tb_event_image b 
+  		where a.event_num=b.event_num and event_image_category='메인' <include refid="sort"/> 
+  		order by a.event_num desc)aa) <![CDATA[where rnum>=#{srnum} and rnum<=#{ernum}]]>
+  	</select>
+  	<select id="get_list_count" resultType="int" parameterType="hashmap">
+  		select count(*) from (select a.*, b.event_image_name from tb_event a, tb_event_image b where a.event_num=b.event_num 
+		and event_image_category='메인' <include refid="sort"/> order by a.event_num desc)
+  	</select>
+  	<select id="chk_detail_img" resultType="int" parameterType="int">
+  		select count(*) from ( select a.*, b.event_image_name from tb_event a, tb_event_image b 
+  		where a.event_num=b.event_num and a.event_num=#{value} and b.event_image_category like '상세'||'%')
+  	</select>
+  	<select id="get_event_detail" resultType="tbEventListVo" parameterType="hashmap">
+  		select a.*, b.event_image_name from tb_event a, tb_event_image b 
+  		where a.event_num=b.event_num and a.event_num=#{event_num} <include refid="cnt"/>
+  	</select>
+  	<select id="get_event_item" resultType="tbEventItemVo" parameterType="hashmap">
+  		select * from(select aa.*,rownum rnum from (select distinct a.*, b.shop_item_subimg_num,b.shop_item_mainimg_imgname 
+  		from tb_shop_item a, tb_shop_item_subimg b 
+  		where a.shop_item_code(+)=b.shop_item_code and a.shop_item_code like #{event_object_num}||'%' 
+		and not b.shop_item_mainimg_imgname='-')aa)<![CDATA[where rnum>=#{srnum} and rnum<=#{ernum}]]>
+  	</select>
+  	<select id="get_item_count" resultType="int" parameterType="int">
+  		select count(*) from (select distinct a.*, b.shop_item_subimg_num,b.shop_item_mainimg_imgname from tb_shop_item a, tb_shop_item_subimg b 
+		where a.shop_item_code(+)=b.shop_item_code and a.shop_item_code like #{value}||'%' and not b.shop_item_mainimg_imgname='-')
+  	</select>
+  	<select id="get_event_category" resultType="tbEventCategoryVo" parameterType="int">
+  		select * from tb_event_category where event_category_num=#{value}
+  	</select>
+  	<select id="get_event_banner_list" resultType="tbEventListVo" parameterType="int">
+  		select * from(select a.*, b.event_image_name from tb_event a, tb_event_image b where a.event_num=b.event_num and event_image_category='메인'
+  		order by DBMS_RANDOM.RANDOM) where event_sort='진행중'<![CDATA[ and rownum <=#{value}]]>
+  	</select>
+  	<select id="chk_event_sort_ing" resultType="tbEventListVo">
+  		select * from(select a.*, b.event_image_name from tb_event a, tb_event_image b where a.event_num=b.event_num and event_image_category='메인')
+  		<![CDATA[where event_end>=sysdate and event_start<=sysdate and event_sort='예정']]>
+  	</select>
+  	<select id="chk_event_sort_end" resultType="tbEventListVo">
+  		select * from(select a.*, b.event_image_name from tb_event a, tb_event_image b where a.event_num=b.event_num and event_image_category='메인')
+  		<![CDATA[where event_end<=sysdate and event_sort='진행중']]>
+  	</select>
+  	<update id="event_ing_update" parameterType="int">
+  		update tb_event set event_sort='진행중' where event_num=#{value}
+  	</update>
+  	<update id="event_end_update" parameterType="int">
+  		update tb_event set event_sort='종료' where event_num=#{value}
+  	</update>
+  	<select id="event_coupon_info" resultType="tbEvent_Coupon_InfoVo" parameterType="int">
+  		select a.event_title,a.event_start,a.event_end,a.event_w_date,a.event_sort,a.event_category_num,b.* 
+  		from tb_event a, tb_event_coupon b where a.event_num=b.event_num and b.event_num=#{value}
+  	</select>
+  	<select id="get_coupon_event" resultType="tbCouponInfoVo" parameterType="int">
+  		select * from tb_coupon where coupon_subject like '%'||'(이벤트)'||'%' and coupon_num=#{value }
+  	</select>
+  	<insert id="get_event_coupon" parameterType="hashmap">
+  		insert into tb_coupon_mycoupon values(null,1,#{coupon_num },#{get_id },sysdate,sysdate+#{coupon_validity})
+  	</insert>
+  	<update id="update_event_coupon_num" parameterType="hashmap">
+  		update tb_event_coupon set event_coupon_num=#{event_coupon_num }-1 where coupon_num=#{coupon_num }
+  	</update>
+  	<select id="get_mycoupon_info" resultType="tbMyCouponInfoVo" parameterType="hashmap">
+  		select * from tb_coupon_mycoupon where member_privacy_id=#{get_id } and coupon_num=#{coupon_num }
+  	</select>
+  	<select id="event_coupon_chk_date" resultType="tbEvent_Coupon_InfoVo">
+  		select a.event_title,a.event_start,a.event_end,a.event_w_date,a.event_sort,a.event_category_num,b.* 
+		from tb_event a, tb_event_coupon b where a.event_num=b.event_num and <![CDATA[event_end<=sysdate]]>
+  	</select>
+  	<select id="event_coupon_chk_count" resultType="tbEvent_Coupon_InfoVo">
+  		select a.event_title,a.event_start,a.event_end,a.event_w_date,a.event_sort,a.event_category_num,b.* 
+		from tb_event a, tb_event_coupon b where a.event_num=b.event_num and <![CDATA[event_coupon_num<=0]]>
+  	</select>
+  	<delete id="del_event_coupon" parameterType="int">
+  		delete from tb_event_coupon where coupon_num=#{value}
+  	</delete>
+  	<delete id="del_coupon" parameterType="int">
+  		delete from tb_coupon where coupon_num=#{value}
+  	</delete>
+  	<select id="chk_discount_event" parameterType="int" resultType="tbEventListVo">
+  		select * from(select a.*, b.event_image_name from tb_event a, tb_event_image b where a.event_num=b.event_num and event_image_category='메인')
+  		<![CDATA[where event_end>=sysdate and event_start<=sysdate and event_sort='예정']]>and event_category_num=#{value }
+  	</select>
+  	<select id="chk_end_discount_event" parameterType="int" resultType="tbEventListVo">
+  		select * from(select a.*, b.event_image_name from tb_event a, tb_event_image b where a.event_num=b.event_num and event_image_category='메인')
+  		<![CDATA[where event_end<=sysdate and event_sort='진행중']]>and event_category_num=#{value }
+  	</select>
+  	<select id="chk_discount_item" parameterType="int" resultType="tbEventDiscountVo">
+  		select shop_item_code,shop_itemprice,shop_item_discountrate,shop_item_saleprice from tb_shop_item where shop_item_code like #{value }||'%'	
+  	</select>
+  	<update id="update_event_discountrate" parameterType="hashmap">
+  		update tb_shop_item set shop_item_discountrate=#{event_discount_rate },shop_item_saleprice=shop_itemprice-((shop_itemprice/10)*#{disc_rate })
+  		where shop_item_code like #{event_object_num }||'%'
+  	</update>
+  	<update id="update_discount_end" parameterType="int">
+  		update tb_shop_item set shop_item_discountrate=0,shop_item_saleprice=shop_itemprice where shop_item_code like #{event_object_num }||'%'
+  	</update>
+ </mapper>

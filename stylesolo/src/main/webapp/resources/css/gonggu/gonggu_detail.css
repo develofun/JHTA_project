@@ -1,0 +1,105 @@
+@CHARSET "UTF-8";
+
+table.gonggu_detail {
+	border-collapse: collapse;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	margin: 20px 10px;
+}
+
+table.gonggu_detail th {
+	width: 180px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: center;
+	border-bottom: 1px solid #ccc;
+}
+
+table.gonggu_detail td {
+	width: 700px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+
+
+#wrap {
+	width: 1000px;
+	margin: auto;
+}
+
+#wrap #title {
+	width: 1000px;
+	height: 60px;
+}
+
+#wrap #content_left {
+	width: 600px;
+	height: 500px;
+	margin: 10px;
+	padding: 10px;
+	float: left;
+}
+
+#wrap #content_left #content_img {
+	width: 580px;
+	height: 340px;
+	float: left;
+}
+
+#wrap #content_left #content_simplecon {
+	width: 580px;
+	height: 120px;
+	float: left;
+	margin-top: 20px;
+	padding: 10px;
+	border-radius:10px;
+	background-color: rgba(128, 128, 128, 0.11);
+}
+
+#wrap #content_right {
+	width: 300px;
+	height: 500px;
+	margin: 10px;
+	padding: 10px;
+	float: left;
+}
+
+#wrap #content_right #content_price {
+	width: 240px;
+	height: 480px;
+	float: left;
+	padding: 20px;
+	border-radius: 10px;
+	background-color: rgba(128, 128, 128, 0.11);
+}
+
+#wrap #detail_menu {
+	width: 900px;
+	height: 30px;
+	float: left;
+}
+
+#wrap #detail_menu a {
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+}
+
+#wrap #detail_menu a:hover {
+	color: gray;
+}
+
+#wrap #detail_content {
+	width: 940px;
+	padding: 10px;
+	float: left;
+	margin-top: 10px;
+}
+
+span {
+	color:black;
+}

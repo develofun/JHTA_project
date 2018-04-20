@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.ChartMapper">
+	<!-- 방문자 통계 추가 -->
+	<update id="update_visitor">
+		update tb_stats_site set stats_site_visitor=stats_site_visitor+1 where to_char(stats_site_date,'yyyy/MM/dd hh24')=to_char(sysdate,'yyyy/MM/dd hh24')
+	</update>
+	
+	<update id="update_login">
+		update tb_stats_site set stats_site_login=stats_site_login+1 where to_char(stats_site_date,'yyyy/MM/dd hh24')=to_char(sysdate,'yyyy/MM/dd hh24')
+	</update>
+	
+	<update id="update_payment" parameterType="int">
+		update tb_stats_site set stats_site_payment=stats_site_payment+1,stats_site_sales=stats_site_sales+#{value} where to_char(stats_site_date,'yyyy/MM/dd hh24')=to_char(sysdate,'yyyy/MM/dd hh24')
+	</update>
+</mapper>

@@ -1,0 +1,320 @@
+@CHARSET "UTF-8";
+ /*명소 테이블 css*/ 
+
+table.kboard_attraction
+   {
+   width: 100%;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   border-top: 1px solid #ccc;
+   border-left: 3px solid #369;
+   margin: 20px 10px;
+}
+
+table.kboard_attraction th {
+   width: 147px;
+   padding: 10px;
+   font-weight: bold;
+   vertical-align: top;
+   color: #153d73;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+table.kboard_attraction td {
+   width: 349px;
+   padding: 10px;
+   vertical-align: top;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+/*맛집 테이블 css*/
+table.kboard_food {
+   width: 100%;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   border-top: 1px solid #ccc;
+   border-left: 3px solid #369;
+   margin: 20px 10px;
+}
+
+table.kboard_food th {
+   width: 147px;
+   padding: 10px;
+   font-weight: bold;
+   vertical-align: top;
+   color: #153d73;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+table.kboard_food td {
+   width: 349px;
+   padding: 10px;
+   vertical-align: top;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+/*숙박 테이블 css*/
+table.kboard_hotel {
+   width: 100%;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   border-top: 1px solid #ccc;
+   border-left: 3px solid #369;
+   margin: 20px 10px;
+}
+
+table.kboard_hotel th {
+   width: 147px;
+   padding: 10px;
+   font-weight: bold;
+   vertical-align: top;
+   color: #153d73;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+table.kboard_hotel td {
+   width: 349px;
+   padding: 10px;
+   vertical-align: top;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+/*축제 테이블 css*/
+table.kboard_festival {
+   width: 100%;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   border-top: 1px solid #ccc;
+   border-left: 3px solid #369;
+   margin: 20px 10px;
+}
+
+table.kboard_festival th {
+   width: 147px;
+   padding: 10px;
+   font-weight: bold;
+   vertical-align: top;
+   color: #153d73;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+table.kboard_festival td {
+   width: 349px;
+   padding: 10px;
+   vertical-align: top;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+/* 국내여행 상단 메뉴 */
+div, ul, li {
+   margin: 0;
+   padding: 0;
+}
+
+#kboard_menu {
+   margin-top: 10px;
+   float: left;
+}
+#kboard_menu ul li ul {z-index:100;}
+
+#kboard_menu ul > li {
+   float: left;
+   list-style-type: none;
+   background-color: #333;
+   
+}
+#kboard_menu ul > li.topMenu:hover{background-color: #000;}
+
+#kboard_menu li a {
+   display: block;
+   width: 110px;
+   height: 40px;
+   line-height: 40px;
+   text-decoration: none;
+   border: 1px solid #d5d5d5;
+}
+
+#kboard_menu a {
+   text-align: center;
+   color: #f1f1f1;
+   text-decoration: none;
+}
+
+
+#kboard_menu ul>li>ul {
+   display: none;
+   position: absolute;
+   background-color: #683531;
+}
+
+#kboard_menu ul li:hover ul {
+   display: block;
+}
+
+#kboard_menu ul li ul li {
+   float: none;
+   background-color: #eee;
+}
+#kboard_menu ul>li>ul>li>a{color:#777;}
+#kboard_menu ul>li>ul>li>a:hover{color:#333;}
+
+/* 국내여행 글쓰기 버튼 */
+#kboard_page #kboard_create {
+   float:right;
+   display: block;
+   text-align: center;
+   color: #f1f1f1;
+   text-decoration: none;
+   background-color: #5c5c5c;
+   width: 50px;
+   height: 20px;
+   line-height: 28px;
+}
+
+/*국내여행 이미지게시판*/
+#kboard {
+   position:relative;
+   width: 900px;
+   margin-top: 50px;
+}
+
+#kboard_category {
+   float: left;
+   width: 90px;
+   height: auto;
+}
+
+
+/* 국내여행 좌측 메뉴 */
+#kboard_category ul {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+#kboard_category ul li a {
+   padding:2px 20px;
+   line-height: 30px;
+   text-decoration: none;
+   border: 1px solid #d5d5d5;
+   color: #f1f1f1;
+   background-color: #333;
+}
+
+#kboard_read {
+   float: left;
+   width: 800px;
+}
+#kboard_read ul {list-style: none;content:"";zoom:1;}
+#kboard_read ul li{width:250px;float:left;margin:10px 10px 0 0;}
+
+#kboard_read img {width: 250px; height: 200px; }
+
+
+#kboard_read a { font-size:20px; color:#000; text-decoration: none;}
+
+
+#kboard_page{text-align: center;margin-left: 100px;align: center;}
+
+/*국내여행 상세*/
+
+#kboard_detail_btn{float: right;}
+#map{width: 900px; height: 250px;}
+#kboard_detail{}
+
+#viewContent{width:100%;margin-top:40px;}
+#viewContent h2{margin-bottom:20px;}
+#viewContent #imgContent{width:43%; margin-right:10%; float:left;}
+#viewContent #imgContent img{width:450px; height: 250px;}
+#viewContent #infoContent{width:47%; float:left;}
+#viewContent #infoContent ul{list-style: none;margin: 0;padding: 0;border: solid #aaa;border-width: 3px 0 1px;border-top-color: #e6490c;}
+#viewContent #infoContent ul li{height: auto; border-bottom:1px solid #dbdbdb; padding:10px 0;}
+#viewContent #detailContent{margin:15px 0 30px 0; border-top:1px solid #dbdbdb; border-bottom:1px solid #dbdbdb;padding:15px 0;}
+
+#kboard_detail_btn {margin-top:20px; float:right;}
+#kboard_detail_btn a{background: #5c5c5c;color:#fff;text-decoration: none;text-align: center;padding:5px 10px;}
+#kboard_detail_btn #kboard_deleteBtn{}
+#kboard_detail_btn #kboard_updateBtn{margin-right:5px;}
+
+
+ /*국내여행 업데이트 폼*/
+ table.kboard_update_table
+   {
+   width: 100%;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   border-top: 1px solid #ccc;
+   border-left: 3px solid #369;
+   margin: 20px 10px;
+}
+
+table.kboard_update_table th {
+   width: 147px;
+   padding: 10px;
+   font-weight: bold;
+   vertical-align: top;
+   color: #153d73;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+table.kboard_update_table td {
+   width: 349px;
+   padding: 10px;
+   vertical-align: top;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+/*공지사항 상세게시판*/
+#noticeLayer{width:100%;margin-top:30px;}
+#noticeLayer #titleLayer{text-align: center; font-size:23px; padding:7px 0; border-top:2px solid #e6490c; border-bottom: 1px solid #aaa;}
+#noticeLayer #contentLayer{padding:20px 0; font-size: 15px;border-bottom: 1px solid #aaa;}
+#noticeLayer .comment{margin-top:10px;}
+#noticeLayer .createBtn{background: #303f61;color:#fff;text-decoration: none;float:right;text-align: center;padding:29px 39px; margin-top:9px;}
+#noticeLayer #commentLayer{}
+#noticeLayer #commentLayer p{font-size:12px; font-weight: bold; margin:15px 0 10px 0;}
+#noticeLayer #commentLayer p.writer{margin:0 0 10px 0; font-size:15px; }
+#noticeLayer #commentLayer p.content{margin:0; font-size:15px; font-weight: normal;}
+#noticeLayer #commentLayer p.date{margin:5px 0 0 0; font-size:13px; font-weight: normal; color:#999;}
+#noticeLayer #commentLayer ul{list-style: none;margin: 0;padding: 5px 0 0 0;border: solid #aaa;border-width: 1px 0 1px;border-top-color: #aaa;}
+#noticeLayer #commentLayer ul li{height: auto; border-bottom:1px solid #dbdbdb; padding:10px 0; font-size: 16px;}
+#noticeLayer #commentLayer ul li:last-child{border-bottom:none;}
+#noticeLayer #commentLayer .delBtn{background: #e8030d;color:#fff;padding:3px 10px; text-decoration: none; float: right;}
+#noticeLayer #commentLayer #comment_plus_btn{width:100%; background: #fff; border: 1px solid #d4d4d4; margin-top:5px; padding:15px 0;font-size:17px; font-weight: bold; cursor: pointer;}
+
+#notice_detail_btn {margin-top:20px; float:right;}
+#notice_detail_btn a{background: #c5421b;color:#fff;text-decoration: none;text-align: center;padding:10px 10px;}
+#notice_detail_btn #notice_deleteBtn{}
+#notice_detail_btn #notice_updateBtn{margin-right:5px;}
+
+
+/*공지사항 목록*/
+table.notice_read {   border-collapse: separate; border-spacing: 1px; text-align: center;   line-height: 1.5; margin: 20px 0;width: 100%;}
+table.notice_read th {width: 155px;padding: 10px;font-weight: bold;vertical-align: top;color: #fff;background: #6583ab;}
+table.notice_read td {width: 155px;padding: 10px;vertical-align: top;border-bottom: 1px solid #ccc;background: #fff;}
+table.notice_read td a:link{color:#3a2f2f;}
+table.notice_read td a:VISITED{color:#3a2f2f;}
+#notice_create_btn {float:right;}
+#notice_create_btn a{background: #6583ab;color:#fff;text-decoration: none;text-align: center;padding:5px 10px;}
+#notice_read_page {padding-left: 300px;}
+
+
+/*공지사항 글쓰기*/
+.kboard_notice_create{margin-top:30px;}
+/* .notice_read_title a:link{color:black;} */
+/*공지사항 글수정*/
+.kboard_notice_update{margin-top:30px;}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.MainPageMapper">
+	<select id="callBannerData" parameterType="string" resultType="tbBannerVo">
+		select tb.*, tsm.shop_menu_name
+		from tb_banner tb join tb_shop_menu tsm
+		on tb.shop_menu_code = tsm.shop_menu_code
+		<if test="value != null">
+		   and tsm.shop_menu_code = #{value}
+		</if>
+	</select>
+
+	<select id="callShopLatestProducts" parameterType="int" resultType="shopItemVo">
+		select rownum, shopItemTable.*
+		from (
+			select tsi.*, tsis.shop_item_mainimg_imgname, tsis.shop_item_subimg_imgname
+			from tb_shop_item tsi join tb_shop_item_subimg tsis
+			on tsi.shop_item_code = tsis.shop_item_code
+			order by shop_item_regdate desc
+			) shopItemTable
+		where rownum between 1 and ${value}
+	</select>
+	<!-- 
+	<select id="callShoppingDataByCategory">
+		select *
+		from (
+			select si.*, sis.shop_item_mainimg_imgname
+			from tb_shop_item si join tb_shop_item_subimg sis
+			on si.shop_item_code = sis.shop_item_code 
+			)
+		where shop_item_code like '00%'
+	</select>
+	<select id="callMajorEventData">
+		select *
+		from tb_event
+		where event_sort != '종료'
+		order by event_start
+	</select>
+	<select id="callMajorRecommendData">
+		
+	</select>
+	 -->
+	<select id="callMajorGongguData" parameterType="int" resultType="tbGongguImgVo">
+		select rownum, gongguJoinTable.*
+		from (
+			select gins.*, gimg.gonggu_img_name, gimg.gonggu_img_sname
+			from tb_gonggu_insert gins join tb_gonggu_img gimg
+			on gins.gonggu_insert_num = gimg.gonggu_insert_num
+			order by gonggu_insert_date desc
+			) gongguJoinTable
+		where rownum between 1 and ${value}
+	</select>
+</mapper>

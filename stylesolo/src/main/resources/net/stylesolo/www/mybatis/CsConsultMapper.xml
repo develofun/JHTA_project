@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.CsConsultMapper">
+  	<select id="get_member_privacy" parameterType="String" resultType="tbMemberPrivacyVo">
+  		select * from tb_member_privacy where  member_privacy_id=#{value}
+  	</select>
+  	<select id="get_consult_category"  resultType="tbConsultCategoryVo">
+  		select * from tb_consult_category order by consult_category_num
+  	</select>
+  	<select id="send_consult" parameterType="hashmap" resultType="int">
+  		insert into tb_cs_consult values 
+  		(null,#{cs_consult_title},#{cs_consult_content},sysdate,#{cs_consult_answercheck},
+  		#{member_privacy_id},#{consult_category_num});
+  	</select>
+  	<insert id="send_question" parameterType="hashmap">
+  		insert into tb_cs_consult values (null,#{cs_consult_title},#{cs_consult_content},sysdate,#{cs_consult_answercheck},#{member_privacy_id},#{consult_category_num},#{cs_consult_state},null)
+  	</insert>
+  	<select id="get_new_consult_num" resultType="int">
+  		select cs_consult_num from (select * from tb_cs_consult order by cs_consult_num desc) where rownum = 1
+  	</select>
+  	<insert id="consult_image" parameterType="tbCsConsultImageVo">
+  		insert into tb_cs_consult_image values(null,#{cs_consult_num},#{cs_consult_image_name})
+  	</insert>
+  	<select id="get_ing_consult" resultType="tbCsConsultVo" parameterType="hashmap">
+  		select * from (select cons.*, rownum rnum from 
+		(select * from tb_cs_consult where member_privacy_id=#{member_privacy_id} and cs_consult_answercheck='확인 중' 
+		and cs_consult_state='처리 중' order by cs_consult_num desc)cons)
+		<![CDATA[where rnum >= #{snum_ing} and rnum <= #{enum_ing}]]>
+  	</select>
+  	<select id="get_end_consult" resultType="tbCsConsultVo" parameterType="hashmap">
+  		select * from (select cons.*, rownum rnum from 
+		(select * from tb_cs_consult where member_privacy_id=#{member_privacy_id} and cs_consult_answercheck='처리완료' 
+		and cs_consult_state='처리완료' order by cs_consult_num desc)cons)
+		<![CDATA[where rnum >= #{snum_end} and rnum <= #{enum_end}]]>
+  	</select>
+  	<select id="get_consult_answer" resultType="tbCsConsultAnswerVo" parameterType="int">
+  		select * from tb_cs_consult_answer where cs_consult_num=#{value}
+  	</select>
+  	<select id="consult_image_detail" resultType="tbCsConsultImageVo"  parameterType="int">
+  		select * from tb_cs_consult_image where cs_consult_num=#{value}
+  	</select>
+  	<delete id="consult_del" parameterType="int">
+  		delete from tb_cs_consult where cs_consult_num=#{value}
+  	</delete>
+  	<delete id="consult_img_del" parameterType="int">
+  		delete from tb_cs_consult_image where cs_consult_num=#{value}
+  	</delete>
+  	<select id="consult_ing_count" resultType="int" parameterType="String">
+  		select count(*) from tb_cs_consult where member_privacy_id=#{value} and cs_consult_answercheck='확인 중'
+  	</select>
+  	<select id="consult_end_count" resultType="int" parameterType="String">
+  		select count(*) from tb_cs_consult where member_privacy_id=#{value} and cs_consult_answercheck='처리완료'
+  	</select>
+  </mapper>

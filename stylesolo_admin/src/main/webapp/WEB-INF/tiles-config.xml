@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions 
+	PUBLIC "-//Apache Software Foundation//DTD mains Configuration 2.1//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<definition name=".main" template="/WEB-INF/views/layout/mainLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/main/mainHeader.jsp"/>
+		<put-attribute name="sidebar" value="/WEB-INF/views/main/mainSidebar.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/main/mainContent.jsp"/>
+		<!-- <put-attribute name="footer" value="/WEB-INF/views/test/testFooter.jsp"/> -->
+	</definition>
+	
+	<definition name=".login.*" template="/WEB-INF/views/layout/loginLayout.jsp">
+		<put-attribute name="login_or_join" value="/WEB-INF/views/login/{1}.jsp"/>
+	</definition>
+	
+	<definition name=".*.*" extends=".main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+</tiles-definitions>

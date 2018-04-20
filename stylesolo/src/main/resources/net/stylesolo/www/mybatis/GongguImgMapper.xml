@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.GongguImgMapper">
+	<insert id="insert" parameterType="tbGongguImgVo">
+		insert into tb_gonggu_img values(tb_gonggu_img_seq.nextval,#{gonggu_img_name},#{gonggu_img_sname},
+		sysdate,tb_gonggu_insert_seq.currval)
+	</insert>
+</mapper>

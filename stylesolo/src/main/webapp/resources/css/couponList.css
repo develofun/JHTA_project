@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+h1{color:gray}
+hr{border-color: gray;border: 3px double}
+.couponWrap{width:700px;overflow: auto}
+.coupon{width:320px;height:150px;border:1px dotted gray;
+background-color: #eee;float:left; margin:10px; text-align: center;}
+.coupon ul{list-style: none;}

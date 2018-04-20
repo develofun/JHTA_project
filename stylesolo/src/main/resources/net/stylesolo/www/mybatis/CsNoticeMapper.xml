@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.CsNoticeMapper">
+  		<sql id="go">
+  			<choose>
+  				<when test="search!=null" >
+  						where cs_notice_title like '%'||#{search}||'%' or cs_notice_content like '%'||#{search}||'%'
+  				</when>
+  			</choose>
+  		</sql>
+  
+  			<select id="CsNoticeList" resultType="tbCsNoticeVo" parameterType="hashmap">
+				select * from (select aa.*,rownum rnum from
+  		 		(select * from TB_CS_NOTICE <include refid="go"/> order by cs_notice_num desc) aa) 
+  				<![CDATA[where rnum >= #{startnum} and rnum <= #{endnum}]]>  
+			</select>
+			<select id="CsNoticehits" resultType="tbCsNoticeVo" parameterType="hashmap">
+			select * from(select cnh.*,rownum rnum from 	
+				(select * from TB_CS_NOTICE order by cs_notice_hit desc)cnh)
+			<![CDATA[where rnum >= #{startnum} and rnum <= #{endnum}]]>
+			</select>
+			<select id="csNoticeCount" resultType="int" parameterType="hashmap">
+				select count(*) from TB_CS_NOTICE
+				<include refid="go"/>
+			</select>
+			<update id="NoticeHitUpdate" parameterType="int">
+				update TB_CS_NOTICE set cs_notice_hit=cs_notice_hit+1 where cs_notice_num=#{num}
+			</update>
+			<select id="csn_get_rnum" resultType="tbCsNoticeVo" parameterType="hashmap">
+				select * from 
+					(select cs_notice_num, rownum rnum from TB_CS_NOTICE<include refid="go"/>
+					order by cs_notice_num desc )where cs_notice_num=#{n_num}
+			</select>
+			<select id="csNoticeDetail" resultType="tbCsNoticeVo" parameterType="hashmap">
+				select cs_notice_category,cs_notice_title,cs_notice_w_date,CS_NOTICE_CONTENT from TB_CS_NOTICE where cs_notice_num=#{num}
+			</select>
+  </mapper>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

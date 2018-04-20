@@ -1,0 +1,157 @@
+@CHARSET "UTF-8";
+
+#main {
+	width: 1000px;
+	height:800px;
+	margin: auto;
+}
+
+#main #banner {
+	width: 1000px;
+	height: 300px;
+	margin-top: 10px;
+}
+
+#main #submenu {
+	width: 1000px;
+	height: 60px;
+	margin-top: 10px;
+}
+
+#main #content_div {
+	width: 1000px;
+	height: 740px;
+	margin-top: 10px;
+}
+
+#main #content_div #best_member {
+	width: 960px;
+	height: 300px;
+	margin: 10px;
+	padding: 10px;
+}
+
+#main #content_div #best_member #best_member_title {
+	width: 960px;
+	height: 40px;
+}
+
+#main #content_div #best_member #best_member1 {
+	width: 270px;
+	height: 220px;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+}
+
+.member_img {
+	width: 250px;
+	height: 120px;
+	padding: 10px;
+}
+
+.member_img img {
+	width: 250px;
+	height: 120px;
+}
+
+.member_content {
+	width: 250px;
+	height: 100px;
+	padding: 10px;
+}
+
+.member_content a {
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
+.member_content a:hover {
+	color: #D5D5D5;
+}
+
+.member_content span {
+	color: black;
+	font-size: 12px;
+}
+
+#main #content_div #best_member #best_member2 {
+	width: 270px;
+	height: 220px;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+}
+
+#main #content_div #best_member #best_member3 {
+	width: 270px;
+	height: 220px;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+}
+
+#main #content_div #best_admin {
+	width: 960px;
+	height: 300px;
+	margin: 10px;
+	padding: 10px;
+}
+
+#main #content_div #best_admin #best_admin_title {
+	width: 960px;
+	height: 40px;
+}
+
+#main #content_div #best_admin #best_admin1 {
+	width: 270px;
+	height: 220px;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+	border-radius:5px;
+}
+
+#main #content_div #best_admin #best_admin2 {
+	width: 270px;
+	height: 220px;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+	border-radius:5px;
+}
+
+#main #content_div #best_admin #best_admin3 {
+	width: 270px;
+	height: 220px;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+	border-radius:5px;
+}
+
+#main #main_manu #topMenu ul li {
+	list-style:none;
+	color:white;
+	background-color:#2d2d2d;
+	float:left;
+	line-height:30px;
+	vertical-align:middle;
+	text-align:center;
+}
+
+#main #main_manu #topMenu .menuLink {
+	text-decoration:none;
+	color:white;
+	display:block;
+	width:150px;
+	font-size:12px;
+	font-weight:bold;
+	
+}
+
+#main #main_manu #topMenu .menuLink:hover { 
+	color:red;
+	background-color:#4d4d4d;
+}

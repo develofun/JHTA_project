@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+#wrap {
+	width: 1000px;
+	height: 600px;
+	margin: auto;
+}
+
+#wrap #gonggu_upload_request {
+	width: 440px;
+	height: 500px;
+	float: left;
+	margin-left: 270px;
+	margin-top: 40px;
+	padding-left: 20px;
+	padding-top: 10px;
+	border-radius:5px;
+	background-color: white;
+}
+
+#wrap #gonggu_upload_request #gonggu_upload_request_div {
+	margin-top: 30px;
+}
+
+.check_error {
+	color:red;
+}
+.check_ok {
+	color:green;
+}

@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+/*이벤트 메인*/
+*{margin: 0px;padding:0px}
+#event_wrap{
+	width:1000px;
+	margin:auto;
+}
+#event_wrap_main{width: 1000px;
+        height:1100px;
+        margin: auto;
+        }
+#event_header{width:200px;height:70px;margin-bottom: 20px;margin-left: 50px;border: 1px solid black;margin-top: 15px;text-align: center;}
+#event_header h1{margin: 0px}
+#event_content{width:100%;margin-left: 50px}
+#event_banner{ width: 580px;
+		height:200px;
+        float: left;}
+#event_headevent_one{ width: 280px;
+		height:90px;
+        margin-bottom: 18px;
+        margin-left: 40px;
+        float: left;
+        border: 1px solid #bcbcbc;}
+        
+#event_headevent_two{ width: 280px;
+		height:90px;
+        float: left;
+        margin-left: 40px;
+        border: 1px solid #bcbcbc;}
+#event_head_image{width: 280px;height: 88px; padding:7px;}
+#event_menu{width:903px;height:740px;float: left;margin-top: 15px;text-align: center;}
+#event_buttons{width:880px;height:28px ;float: left;text-align: left;margin-left: 12px;margin-bottom: 10px;margin-top: 10px}
+#event_menus{width:880px;height:670px;border: 3px solid gray;display: inline-block;margin-top: 0px;text-align: center;border-radius:10px}
+#event_menus_list{width: 840px;height:580px;border-spacing: 30px;margin-left:19px;margin-top: 30px}
+#event_menu_image{float: left;width: 254px; height: 115px;margin: 13px;
+	padding: 10px;
+    border: 6px solid rgba(128, 128, 128, 0.47);
+    border-radius: 7px;}
+#event_paging{width: 800px; height: 30px;text-align: center;display: inline-block;}
+/*이벤트 페이지 할인/쿠폰 목록*/
+#event_head{width:900px;height:200px; border: 1px solid black;display: inline-block;margin-top: 20px}
+#event_item_list{width:900px;height:860px;display: inline-block;margin-top: 20px;margin-bottom: 10px}
+#event_item{float: left;width:200px;height: 250px;margin-top: 30px;margin-left: 20px}
+#event_item_img{height: 200px;width: 200px;}
+#event_item_img img{height: 200px;width: 200px;border-bottom: 0px}
+#event_item_name{height: 50px;width: 200px;text-align: center;text-overflow: ellipsis;overflow: hidden;white-space: nowrap}
+#event_detail_head_img{width: 900px;height: 200px;}
+#event_item_paging{width: 900px; height: 40px;text-align: center;}
+#event_item_paging a{font-size: 200;}
+/*이벤트페이지 쿠폰 받기창*/
+#event_cupon_wrap{width: 900px; height: 650px;text-align: center;}
+#event_cupon_info{width: 800px;height: 500px;margin-top: 20px;display: inline-block;}
+#event_cupon_btn{width: 200px;height: 60px;margin-top: 20px;display: inline-block;}
+#info_img{width: 800px;height: 500px;}
+#event_btn_img{width: 300px;height: 80px}
+
+/*이벤트 쿠폰 받기 결과창*/
+#event_result_wrap{width: 900px; height: 550px;text-align: center;border: 1px solid black;margin-top: 10px}
+#event_result{width: 850px;height: 500px;margin-top: 20px;display: inline-block;border: 1px solid black;margin-left: 10px}
+#event_to_home{display: block;}

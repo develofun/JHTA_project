@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+.display-table{
+	display:table;
+}
+
+.display-table-row{
+	display:table-row;
+}
+
+.display-table-cell{
+	display:table-cell;
+	padding:10px 10px 10px 10px;
+}
+
+.main_chart {
+	display:table-cell;
+	width: 300px;
+}
+
+#item_insert_table th{
+	background-color:aliceblue;
+}

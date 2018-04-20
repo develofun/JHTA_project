@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+
+#wrap {
+	width:1000px;
+	margin:auto;
+}
+
+#wrap #ordering_title_img {
+	float:left;
+	margin:20px;
+}
+
+#wrap #ordering_info {
+	width:960px;
+	height:300px;
+	float:left;
+	margin:20px;
+	padding:10px;
+	border:1px solid gray;
+}
+
+#wrap #ordering_user_info {
+	width:960px;
+	height:400px;
+	float:left;
+	margin:20px;
+	padding:10px;
+	border:1px solid gray;
+}
+
+#wrap #ordering_pay_info {
+	width:960px;
+	float:left;
+	margin:20px;
+	padding:10px;
+	border:1px solid gray;
+}
+
+#wrap #ordering_pay_info #pay_info_detail {
+	width:820px;
+	margin:20px;
+	padding:10px;
+}
+
+.ordering_text {
+	height: 18px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}

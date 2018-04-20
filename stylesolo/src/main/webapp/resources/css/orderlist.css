@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: auto
+}
+.orderlist_wrap{width:1000px;height:auto}
+#search {
+	text-align:center;
+	float: right;
+	font-family: "dotum";
+	font-size: 12px;
+	color: #424242;
+}
+
+#order_list table {
+	width: 100%;
+	border: 2px dotted #eee;
+	margin-top: 10px;
+	font-family: "dotum";
+	font-size: 12px;
+	color: #424242;
+}
+
+#order_list table tr th {
+	background-color: #eee;
+	font-weight: bold;
+}
+
+#order_list table tr td {
+	border-bottom: 1px dotted #eee;
+}
+
+#paging {
+	
+	text-align: center;
+}

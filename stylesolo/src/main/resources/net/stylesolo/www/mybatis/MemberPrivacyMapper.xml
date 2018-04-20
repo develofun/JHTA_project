@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.MemberPrivacyMapper">
+	<insert id="insert" parameterType="tbMemberPrivacyVo">
+		insert into tb_member_privacy values(
+			tb_member_privacy_seq.nextval,
+			'test11',
+			#{member_privacy_id},
+			#{member_privacy_pwd},
+			#{member_privacy_name},
+			#{member_privacy_gender},
+			#{member_privacy_birth},
+			#{member_privacy_email},
+			#{member_privacy_phone},
+			#{member_privacy_addr},
+			1000,
+			'no',
+			'0',
+			sysdate)
+	</insert>
+	<select id="isMember" parameterType="tbMemberPrivacyVo" resultType="tbMemberPrivacyVo">
+		select * 
+		from tb_member_privacy
+		where member_privacy_id = #{member_privacy_id} and member_privacy_pwd = #{member_privacy_pwd}
+	</select>
+	<update id="updateMemberData" parameterType="tbMemberPrivacyVo">
+		update tb_member_privacy
+		set
+		<choose>
+			<when test="member_privacy_pwd != null">
+				member_privacy_pwd = #{member_privacy_pwd}
+			</when>
+			<otherwise>
+				member_privacy_name = #{member_privacy_name},
+				member_privacy_gender = #{member_privacy_gender},
+				member_privacy_birth = #{member_privacy_birth},
+				member_privacy_email = #{member_privacy_email},
+				member_privacy_phone = #{member_privacy_phone},
+				member_privacy_addr = #{member_privacy_addr}
+			</otherwise>
+		</choose>
+		where member_privacy_id = #{member_privacy_id}
+	</update>
+	<select id="callMemberInformation" parameterType="string" resultType="tbMemberPrivacyVo">
+		select	member_privacy_name,
+				member_privacy_gender,
+				member_privacy_birth,
+				member_privacy_email,
+				member_privacy_phone,
+				member_privacy_addr,
+				member_privacy_point,
+				member_privacy_date
+		from tb_member_privacy
+		where member_privacy_id = #{value}
+	</select>
+	<select id="lookForAnAccount" parameterType="tbMemberPrivacyVo" resultType="tbMemberPrivacyVo">
+		select *
+		from tb_member_privacy
+		where
+		<choose>
+			<when test="member_privacy_id != null">
+				member_privacy_id = #{member_privacy_id}
+				and
+				member_privacy_email = #{member_privacy_email}
+				and
+				member_privacy_phone = #{member_privacy_phone} 
+			</when>
+			<otherwise>
+				member_privacy_name = #{member_privacy_name}
+				and
+				member_privacy_phone = #{member_privacy_phone}
+				and
+				member_privacy_birth = #{member_privacy_birth}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="idcheck" parameterType="String" resultType="tbMemberPrivacyVo">
+		select * from tb_member_privacy where member_privacy_id=#{value}
+	</select>
+	<select id="pwdcheck" parameterType="map" resultType="tbMemberPrivacyVo">
+		select * from tb_member_privacy where member_privacy_id=#{member_privacy_id} and member_privacy_email=#{member_privacy_email}
+	</select>
+	<select id="login_memberout" parameterType="hashmap" resultType="hashmap">
+		select * from tb_member_out where member_privacy_id=#{id}
+	</select>
+	
+	<!-- 비번찾은후 변경페이지에서 비번변경하기 -->
+	<update id="new_change_pwd" parameterType="hashmap">
+		update tb_member_privacy set member_privacy_pwd=#{pwd} where member_privacy_id=#{id}
+	</update>
+	<!-- 로그인멤버체크하기 -->
+	<select id="checkMember" parameterType="hashmap" resultType="tbMemberPrivacyVo">
+		select * from tb_member_privacy where member_privacy_id=#{id} and member_privacy_pwd=#{pwd}
+	</select>
+	
+	<!-- 로그인 시 포인트 +10 추가 -->
+	<update id="member_point_add" parameterType="string">
+		update tb_member_privacy set member_privacy_point=member_privacy_point+10 where member_privacy_id=#{value}
+	</update>
+	
+	<!-- 로그인 시 접속자 수 증가 -->
+	
+	<!-- 
+	 아이디찾기(이름,생년월일) + 전화번호추가(3개값 비교)
+	<select id="member_findId" parameterType="hashmap" resultType="tbMemberPrivacyVo">
+		select * from tb_member_privacy 
+		where member_privacy_name=#{name} and member_privacy_birth=#{birth} and member_privacy_phone=#{phone}
+	</select>
+	비밀번호찾기(아이디,이메일,전화번호)
+	<select id="member_findPwd" parameterType="hashmap" resultType="tbMemberPrivacyVo">
+		select * from tb_member_privacy 
+		where member_privacy_id=#{id} and member_privacy_email=#{email} and member_privacy_phone=#{phone}
+	</select>
+	<update id="update" parameterType="tbMemberPrivacyVo">
+		update tb_member_privacy set member_privacy_gender=#{member_privacy_gender},
+		member_privacy_birth=#{member_privacy_birth}, member_privacy_phone=#{member_privacy_phone},
+		member_privacy_email=#{member_privacy_email}, member_privacy_addr=#{member_privacy_addr}
+		where member_privacy_id=#{member_privacy_id}
+	</update>
+	-->
+	<update id="changepwd" parameterType="memberChangePwdVo">
+		update tb_member_privacy set member_privacy_pwd=#{changepwd} 
+		where member_privacy_id=#{id} and member_privacy_pwd=#{pwd}
+	</update>
+	<insert id="memberout_insert" parameterType="tbMemberOutVo">
+		insert into tb_member_out values(tb_member_out_seq.nextval,#{member_out_id},#{member_out_cause},sysdate)
+	</insert>
+	<update id="memberout_state_update" parameterType="tbMemberOutVo">
+		update tb_member_privacy set member_privacy_state='탈퇴'
+		where member_privacy_id=#{member_out_id}
+	</update>
+</mapper>

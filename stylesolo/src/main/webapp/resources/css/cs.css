@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+/* 공통 */
+*{margin: 0px;padding: 0px}
+#cs_wrap {width:1000px;margin:auto;}
+#cs_left {width:200px;;float:left;text-align: left;}
+#cs_menu{text-align: left;margin-top: 30px;}
+#cs_menus_out li a {font-size: 18px;color: black;text-decoration: none;margin-top: 10px;text-align: left;font-weight:bold}
+#cs_menus_in li a{font-size: 15px;text-align: left;margin-left:20px;font-weight:normal; }
+#cs_menus_in{padding:20px 0px;margin:10px 0px;}
+#cs_menus_out li {list-style:none;text-align: left;margin:5px 0px;}
+#cs_menu{margin-bottom:5px}
+#cs_menu ul{text-align: left;}
+#cs_menu ul li a{text-align: left;}
+#cs_right {width: 790px;float: left;text-align: center;margin-left: 10px;margin-bottom: 30px;}
+#cs_title{width:198px;height:40px;text-align: center;}
+#cs_title h2{margin: 0px}
+/* FAQ / FAQList */
+#faq_search_wrap{width: 790px;height:100px;margin-top: 50px;margin-bottom: 20px;text-align: center;}
+#faq_search{margin-top: 30px}
+#faq_search_in{width: 350px;height: 30px;margin-left: 10px;margin-bottom: 5px;}
+#faq_search_button{width: 80px;height: 30px}
+#faq_search span{font: 100px;font-weight: bolder;height: 30px;color: black;}
+#faq_keyword{width: 470px;height:25px; display:inline-block}
+#faq_keyword span a,#faq_keyword span{font: 40px; text-decoration: none; color: black;}
+#faq_keyword_title{font-weight: bolder;}
+#faq_list_main{width: 748px; text-align: center;height: 700px}
+#faq_list{width: 748px; text-align: center;}
+#faq_list_best{width: 650px;height: 200px;margin-top: 50px;display:inline-block;text-align: left;}
+#faq_list_new{width: 650px;height: 200px;margin-top: 100px;display:inline-block;text-align: left;}
+.faq_tr a{text-decoration: none;color: black;}
+.faq_num {width: 70px;}
+#faq_ltable{width: 650px;display: inline-block;margin-top: 30px;text-align: right;}
+#faq_ltable span{color: black;}
+.faq_answer{display:none;padding: 0px}
+#faq_answer_image{float: left;width:20px;height: 20px;color:red;}
+#faq_answer_content{float: left;width:540px;text-align: left;margin-left:10px;}
+#cs_faq_paging{width:650px;height:40px;display: inline-block;margin-bottom: 30px;margin-top: 20px;text-align: center;}
+
+/* <!-- 1:1문의 --> */
+#consult_main{text-align: left;}
+#conslt_title{text-align: left;width:50%;height:48px;margin-top: 10px;text-align: center;
+background-color: black;}
+#consult_title span{text-align:left;font-size: 27px;font-weight: 600;color: black;}
+#consult_category{text-align: left;width: 100%;height:30%;margin-top: 50px;float: left;}
+#consult_category span{margin-left: 100px;margin-bottom: 10px;color: black;}
+#consult_select span{font-size: 23px;font-weight: 600;margin-left: 50px;margin-right: 20px}
+#consult_btnselect{width:200px;height:25px}
+#consult_member_info{text-align:left;width: 100%;height:200px;float: left;margin-top: 40px;}
+#consult_member_info span{font-size: 23px;font-weight: 600;margin-left: 50px}
+#insert_info {margin-top: 10px;margin-left: 30px}
+#insert_info span{font-size: 22px;font-weight: 600;margin-left: 20px;margin-right: 20px;color: black;}
+.insert_title{font-weight: 300;}
+.insert_info_inputs{height: 20px;width: 150px;}
+#phone_front{height: 20px; width: 80px;}
+#consult_question{text-align:left;width: 100%;height:450px;float: left;}
+#consult_question span{font-size: 23px;font-weight: 600;margin-left: 50px;color: black;}
+#question{margin-top: 20px}
+#question #title{margin-left: 20px;width: 450px ;height: 20px}
+#content{margin-left: 50px;margin-top: 20px;width: 570px;height: 150px;}
+.consult_image{width:150px;margin-left: 10px}
+#image_info{margin-left: 50px}
+#submit{margin-top: 0px;width: 200px;height: 30px;margin-left: 250px}
+/*1:1문의 결과*/
+#cs_result{width: 700px ;height:600px;border: 1px solid black;display: inline-block;}
+/*문의 내역*/
+#consult_list_ing{width: 650px;display:inline-block;text-align: left;}
+#consult_list_end{width: 650px;margin-top: 20px;display:inline-block;text-align: left;}
+#consult_ing_table, #consult_end_table{width: 650px;margin-bottom:10px}
+#consult_ing_table tr,#fconsult_end_table tr{height: 20px;}
+#consult_ing_table th,#consult_end_table th{margin-left: 5px;border: 1px solid black;text-align: center;}
+.ing_table_num{width:60px;}
+.ing_table_title{width:300px}
+.end_table_num{width:60px;}
+.end_table_title{width:270px}
+.end_table_chk{width: 70px}
+#consult_content{text-align: center;}
+#cs_consult_content{float: left;width:600px;border: 1px solid black;margin-left:15px;margin-top: 10px;margin-bottom:2px;text-align: left;padding: 5px;]}
+#cs_consult_answer{float: left;width:600px;border: 1px solid black;margin-left:15px;margin-top:0px;margin-bottom: 10px;text-align: left;padding: 5px;}
+#consult_buttons{text-align: left;margin-left: 15px;margin-bottom: 10px;}
+#consult_ing_paging,#consult_end_paging{float: left; width: 635px; height:20px;text-align: center;padding: 5px;}
+
+/* <!-- 공지사항 --> */
+#cs_notice {width:100%;height:100%;margin-top: 20px;}
+#notice_title {width:100%;height:40px;}
+#notice_title span{font-size: 23px;font-weight: 600;color: black;}
+#notice_table_div {display:inline-block;width:700px;margin: 10px;}
+#notice_table{width:700px;}
+#notice_table th{text-align:center;}
+
+
+
+/*이용안내*/
+#cs_infowrap{margin: auto;border: 1px solid #bcbcbc;text-align: center;}
+#cs_info{border: 1px solid black;margin: 30px;height: 400px;}
+#cs_useinfo{border: 1px solid black;margin: 30px;height: 400px;}
+#cs_userRank{margin: 30px;height: 400px;}
+#cs_rankinfo{margin: 30px;height: 400px;}
+#cs_userRank #R_table td, #cs_userRank #R_table th ,#cs_rankinfo #R_table td, #cs_rankinfo #R_table th {border: 1px solid #ddd;text-align: left;}
+#R_table{border-collapse: collapse;width: 100%; height: 300px;}
+
+
+
+
+
+
+

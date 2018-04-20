@@ -1,0 +1,22 @@
+1. Member
+  1) 입력 양식 페이지 이동 : GET /member/forms/{page}
+    A) page type
+      - join
+      - update
+      - find
+      - login
+     
+  2) 데이터 저장 : POST /member/save/{purpose}
+      - join
+  
+  3) 게정 확인 : POST /member/checkAccount
+  
+  4) 로그인 : POST /member/login
+  
+  5) 데이터 수정 : PUT /member/update
+    
+  6) 인증 및 유효성 체크 : GET /member/valid/{purpose}
+      - duplication
+      - emailCert
+    
+  7) 회워 탈퇴 DELETE /member/drop

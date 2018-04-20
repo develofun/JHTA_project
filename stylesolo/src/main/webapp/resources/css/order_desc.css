@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+*{margin:auto}
+.orderdesc_wrap{width:1000px;height:auto;margin:auto;}
+#orderdesc_items{width:1000px;margin-top:10px;}
+#orderdesc_items table{width:100%;text-align: center;}
+#orderdesc_items table img{width:100px;height:100px;}
+#orderdesc_items table tr th{background-color: #eee}
+#orderdesc_items table tr td{border-bottom: 1px dotted #eee}
+#orderdesc_addr{width:45%;float:left;margin-top:10px;}
+#orderdesc_addr table{width:100%;}
+#orderdesc_pay{width:45%;float:right;margin-top:10px;}
+#orderdesc_pay table{width:100%;}

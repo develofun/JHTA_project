@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.ShopJjimMapper">
+	<select id="jjim_list" parameterType="hashmap" resultType="tbShopJjimVo">
+		select * from 
+		(select a.*,rownum rnum from 
+		(select distinct j.shop_jjim_num,i.shop_item_code,i.shop_item_name,i.shop_item_saleprice,s.shop_item_mainimg_imgname,j.member_privacy_id 
+		from TB_shop_item i,TB_shop_jjim j,TB_shop_item_subimg s 
+		where i.shop_item_code=j.shop_item_code and 
+		i.shop_item_code=s.shop_item_code and 
+		member_privacy_id=#{id}) a)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	<select id="getCount" parameterType="string" resultType="int">
+		select count(*) from 
+		(select distinct j.shop_jjim_num,i.shop_item_code,i.shop_item_name,i.shop_item_saleprice,s.shop_item_mainimg_imgname,j.member_privacy_id from 
+		TB_shop_item i,TB_shop_jjim j,TB_shop_item_subimg s 
+		where i.shop_item_code=j.shop_item_code and 
+		i.shop_item_code=s.shop_item_code and 
+		member_privacy_id=#{value})
+	</select>
+	<select id="itemset_list" parameterType="hashmap" resultType="tbItemsetCodeVo">
+		select * from 
+		(select a.*,rownum rnum from 
+		(select * from 
+		(select j.member_privacy_id,c.item_code_num,c.item_code_setname,c.itemset_code_category,c.itemset_code_price,c.itemset_code_mainimg from 
+		TB_itemset_jjim j,TB_itemset_code c where j.item_code_num=c.item_code_num) 
+		where member_privacy_id=#{id}) a) 
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	<select id="itemset_check" parameterType="tbItemsetJjimVo" resultType="int">
+      select count(*) from TB_ITEMSET_JJIM where member_privacy_id=#{member_privacy_id} 
+      <if test="item_code_num!=null">
+      	and ITEM_CODE_NUM=#{item_code_num}
+      </if>
+   </select>
+	<delete id="jjim_del" parameterType="hashmap">
+		delete from TB_shop_jjim where shop_item_code=#{shop_item_code} and member_privacy_id=#{id}
+	</delete>
+	<delete id="itemset_jjim_del" parameterType="hashmap">
+		delete from TB_ITEMSET_JJIM where item_code_num=#{item_code_num} and member_privacy_id=#{id}
+	</delete>
+</mapper>

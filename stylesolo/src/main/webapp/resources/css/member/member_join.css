@@ -1,0 +1,113 @@
+@CHARSET "UTF-8";
+
+table.member_join {
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	margin: 20px 10px;
+}
+
+table.member_join th {
+	width: 180px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: center;
+	border-bottom: 1px solid #ccc;
+}
+
+table.member_join td {
+	width: 700px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+
+.textboxStyle {
+	height: 18px;
+	width: 120px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+
+#btn1 {
+	background-color: #F6F6F6; /* 배경색상 */
+	border: 1px solid #C0C0C0; /* 테두리 */
+	color: #666666; /* 색상 */
+	text-align: center; /* 텍스트정렬 */
+	text-decoration: none; /* 텍스트장식 */
+	display: inline-block;
+	font-size: 14px;
+	height: 40px;
+	width: 100px;
+	border-radius: 5px;
+}
+
+#btn_idcheck {
+	background-color: #F6F6F6; /* 배경색상 */
+	border: 1px solid #C0C0C0; /* 테두리 */
+	color: #666666; /* 색상 */
+	text-align: center; /* 텍스트정렬 */
+	text-decoration: none; /* 텍스트장식 */
+	display: inline-block;
+	font-size: 12px;
+	height: 30px;
+	width: 80px;
+	border-radius: 5px;
+	margin-left: 10px;
+}
+
+#btn_sendcode {
+	background-color: #F6F6F6; /* 배경색상 */
+	border: 1px solid #C0C0C0; /* 테두리 */
+	color: #666666; /* 색상 */
+	text-align: center; /* 텍스트정렬 */
+	text-decoration: none; /* 텍스트장식 */
+	display: inline-block;
+	font-size: 12px;
+	height: 30px;
+	width: 80px;
+	border-radius: 5px;
+	margin-left: 10px;
+}
+
+#btn_checkcode {
+	background-color: #F6F6F6; /* 배경색상 */
+	border: 1px solid #C0C0C0; /* 테두리 */
+	color: #666666; /* 색상 */
+	text-align: center; /* 텍스트정렬 */
+	text-decoration: none; /* 텍스트장식 */
+	display: inline-block;
+	font-size: 12px;
+	height: 30px;
+	width: 80px;
+	border-radius: 5px;
+	margin-left: 10px;
+}
+
+#btn_addr {
+	background-color: #F6F6F6; /* 배경색상 */
+	border: 1px solid #C0C0C0; /* 테두리 */
+	color: #666666; /* 색상 */
+	text-align: center; /* 텍스트정렬 */
+	text-decoration: none; /* 텍스트장식 */
+	display: inline-block;
+	font-size: 12px;
+	height: 30px;
+	width: 120px;
+	border-radius: 5px;
+	margin-left: 10px;
+}
+
+#wrap {
+	width: 1000px;
+	margin:auto;
+}
+.check_error {
+	color:red;
+}
+.check_ok {
+	color:green;
+}

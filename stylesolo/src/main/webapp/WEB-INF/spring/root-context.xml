@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+	
+<!-- propertis 파일 매핑 -->
+	<context:property-placeholder location="classpath:net/stylesolo/www/properties/application-properties.xml"/>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+<!-- JDBC 데이터 연동 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${database.driverClassName}"/>
+		<property name="url" value="${database.url}"/>
+		<property name="username" value="${database.username}"/>
+		<property name="password" value="${database.password}"/>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:net/stylesolo/www/mybatis/*.xml"/>
+		<property name="typeAliasesPackage" value="net.stylesolo.www.vo"/>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"/>
+	</bean>
+	
+<!-- 자바 메일 서버 설정 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="defaultEncoding" value="euc-kr" />
+		<property name="username" value="dleorbs1985@gmail.com" />
+		<property name="password" value="rhfueo04_+|" />
+		<property name="javaMailProperties">
+			<props>
+				<!-- 인증받아서 메일 보내기 -->
+				<prop key="mail.smtp.auth">true</prop>
+				<!-- smtp 통신을 ssl 암호화하기 -->
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+<!-- 	<bean id="GmailAuth" class="net.stylesolo.www.common.GmailAuth">
+		<property name="mailSender" ref="mailSender"/>
+	</bean>
+	 -->
+<!-- 트랜잭션 설정 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	
+<!-- MVC AUTO bean 등록 설정 -->
+	<context:component-scan base-package="net.stylesolo.www">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+<!-- 
+  Root Application Context	
+    - 최상단 컨텍스트 	
+    - 서로 다른 서블릿 컨텍스트에서 공유하는 bean을 등록	
+    - 웹에서 사용되는 컨트롤러 등을 등록	
+    - 서블릿 컨텍스트에서 등록된 bean을 사용할 수 없으며, 서블릿 컨텍스트와 루트 컨텍스트에서 동일한 bean을 설정할 경우, 서블릿 컨텍스트에서 설정한 bean만 동작
+	
+  Servlet Context	
+    - 서블릿에서 이용되는 컨텍스트	
+    - 여기서 정의된 bean은 다른 서블릿 컨텍스트와 공유할 수 없음
+ -->
+
+
+</beans>

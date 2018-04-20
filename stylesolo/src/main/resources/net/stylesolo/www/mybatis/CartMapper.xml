@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.CartMapper">
+	<select id="cart_list" parameterType="String" resultType="shopCartJoinVo">
+		select distinct c.SHOP_CART_NUM,img.SHOP_ITEM_MAINIMG_IMGNAME,i.SHOP_ITEM_NAME,c.MEMBER_PRIVACY_ID,
+		c.SHOP_ITEM_CODE,c.SHOP_CART_PRICE,c.SHOP_CART_ORDER_QTY,c.ITEM_OPTIONS_NUM,o.ITEM_OPTIONS_NAME
+		from tb_item_options o,tb_shop_cart c,TB_SHOP_ITEM i,TB_SHOP_ITEM_SUBIMG img 
+		where c.shop_item_code=i.shop_item_code and c.ITEM_OPTIONS_NUM=o.ITEM_OPTIONS_NUM
+		and c.shop_item_code=img.shop_item_code and c.member_privacy_id=#{value} order by c.SHOP_CART_NUM asc
+	</select>
+	<delete id="cartDelete" parameterType="hashmap">
+		delete tb_shop_cart where
+		<foreach collection="checkItem" separator="or" item="it">
+			SHOP_CART_NUM=#{it}
+		</foreach>
+	</delete>
+	<select id="cart_list_set" parameterType="String" resultType="itemsetCartJoinVo">
+		select distinct cart.ITEMSET_CART_NUM,c.ITEMSET_CODE_MAINIMG,c.ITEM_CODE_SETNAME,cart.MEMBER_PRIVACY_ID,
+		c.ITEM_CODE_NUM,cart.ITEMSET_CART_PRICE,cart.ITEMSET_CART_ORDER_QTY
+		from tb_itemset_code c,tb_itemset_cart cart 
+		where c.ITEM_CODE_NUM=cart.ITEM_CODE_NUM and
+		cart.member_privacy_id=#{value} order by cart.ITEMSET_CART_NUM asc
+	</select>
+	<delete id="cartDelete_set" parameterType="hashmap">
+		delete tb_itemset_cart where
+		<foreach collection="checkItem" separator="or" item="it">
+			ITEMSET_CART_NUM=#{it}
+		</foreach>
+	</delete>
+	<select id="cart_listup" parameterType="hashmap" resultType="shopCartListVo">
+		select distinct c.SHOP_CART_NUM, i.shop_item_code,i.shop_item_name,c.item_options_num,
+		o.item_options_name,shop_item_mainimg_imgname,shop_item_pointrate,shop_cart_order_qty,
+		shop_item_saleprice 
+		from TB_SHOP_CART c,tb_shop_item i,TB_SHOP_ITEM_SUBIMG img,TB_ITEM_OPTIONS o 
+		where c.SHOP_ITEM_CODE=i.SHOP_ITEM_CODE and c.item_options_num=o.item_options_num
+		and c.SHOP_ITEM_CODE=img.SHOP_ITEM_CODE and
+		<foreach collection="checkItem" separator="or" item="it" open="(" close=")">
+			c.SHOP_CART_NUM=#{it}
+		</foreach>
+	</select>
+	<select id="cart_listup_set" parameterType="hashmap" resultType="itemsetCartJoinVo">
+		select distinct cart.ITEMSET_CART_NUM,c.ITEMSET_CODE_MAINIMG,c.ITEM_CODE_SETNAME,cart.MEMBER_PRIVACY_ID,
+		c.ITEM_CODE_NUM,cart.ITEMSET_CART_PRICE,cart.ITEMSET_CART_ORDER_QTY
+		from tb_itemset_code c,tb_itemset_cart cart 
+		where c.ITEM_CODE_NUM=cart.ITEM_CODE_NUM and
+		<foreach collection="checkItem" separator="or" item="it" open="(" close=")">
+			cart.ITEMSET_CART_NUM=#{it}
+		</foreach>
+	</select>
+</mapper>

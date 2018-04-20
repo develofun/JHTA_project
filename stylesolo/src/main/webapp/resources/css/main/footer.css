@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+*{
+	margin:0px;
+	padding:0px;
+}
+
+#footer{
+	width:100%;
+	height:200px;
+	border-top: 4px solid black;
+	display: -webkit-inline-box;
+}
+
+#footer_wrapper{
+	width:1000px;
+	margin:auto;	
+}
+
+#fdiv{
+	text-align:center;
+}

@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+
+table.gonggu_join {
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	margin: 20px 10px;
+}
+
+table.gonggu_join th {
+	width: 180px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: center;
+	border-bottom: 1px solid #ccc;
+}
+
+table.gonggu_join td {
+	width: 700px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+
+.textboxStyle {
+	height: 18px;
+	width: 120px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+
+#wrap {
+	width: 1000px;
+	margin: auto;
+}
+
+#wrap #joindiv {
+	
+}
+
+#stepimg {
+	width: 1000px;
+	height: 100px;
+	border: 1px solid gray;
+}
+
+#stepimg img {
+	width: 1000px;
+	height: 100px;
+}
+
+.check_error {
+	color:red;
+}
+.check_ok {
+	color:green;
+}

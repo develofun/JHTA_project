@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+#footer{float:left;width:100%;height:200px;}
+#footer #footer_menu{width:100%;height:30px;border-bottom: 1px solid gray;}
+#footer #footer_menu a{text-decoration: none;color:gray;font-size: 12px;}
+#footer #fdiv{width:100%;height:150px;}
+#footer #fdiv #fdiv1{width:310px;height:100%;float:left;padding:5px;margin:5px;margin-left:350px;}
+#footer #fdiv #fdiv2{width:310px;height:100%;float:left;padding:5px;margin:5px;border-left:1px solid #EAEAEA;}
+#footer #fdiv #fdiv3{width:310px;height:100%;float:left;padding:5px;margin:5px;border-left:1px solid #EAEAEA;}

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.ShopReviewMapper">
+	<select id="rgetCountRow" parameterType="int" resultType="int">
+		select count(*) from tb_shop_review where shop_item_code=#{value}
+	</select>
+	<select id="qgetCountRow" parameterType="hashmap" resultType="int">
+		select count(*) from tb_shop_qna where shop_item_code=#{item_code}
+		<if test="keyword !=null and keyword !=''">
+		and shop_qna_title like '%'||#{keyword}||'%'
+		</if>
+	</select>
+	
+	<insert id="insert_qna" parameterType="shopQnaBoardVo">
+		insert into tb_shop_qna values(shop_qna_seq.nextval,#{SHOP_QNA_TITLE},#{SHOP_QNA_CONTENT},sysdate,0,#{SHOP_ITEM_CODE},#{MEMBER_PRIVACY_ID})
+	</insert>
+
+	<select id="getRowCount" parameterType="hashmap" resultType="int">
+		select count(*) from tb_shop_qna where shop_item_code=#{item_code} 
+		<if test="keyword !=null and keyword !=''">
+		and shop_qna_title like '%'||#{keyword}||'%' or shop_qna_content like '%'||#{keyword}||'%'
+		</if>
+	</select>
+	<update id="addHit" parameterType="int">
+		update tb_shop_qna set shop_qna_hit=shop_qna_hit+1 where shop_qna_num=#{value}
+	</update>
+	<!-- 리뷰글 등록하기 -->
+	<insert id="insert_review" parameterType="shopReviewBoardVo">
+		insert into tb_shop_review values(shop_review_seq.nextval,#{shop_review_content},sysdate,#{shop_review_star},#{shop_item_code},#{member_privacy_id})
+		<selectKey keyProperty="insertNum" resultType="Integer" order="AFTER"> 
+		SELECT shop_review_seq.currval FROM dual </selectKey>
+	</insert>
+	<!-- 리뷰파일 업로드결과 저장하기 -->
+	<insert id="reviewFileUp" parameterType="shopReviewFileVo">
+		insert into tb_shop_review_file values(shop_reviewfile_seq.nextval,#{shop_review_file_filename},#{shop_review_num})
+	</insert>
+
+	<!-- 리뷰게시판 글 목록 가져오기 -->
+	<select id="viewList" parameterType="hashmap" resultType="shopReviewBoardVo">	
+		select * 
+		from(select aa.*,rownum rnum 
+		from(select r.shop_review_num,r.SHOP_REVIEW_CONTENT,r.SHOP_REVIEW_W_DATE,r.SHOP_REVIEW_STAR,r.SHOP_ITEM_CODE,r.MEMBER_PRIVACY_ID,f.SHOP_REVIEW_FILE_FILENAME from tb_shop_review r left outer join tb_shop_review_file f 
+		on r.shop_review_num=f.shop_review_num 
+		where shop_item_code=#{item_code}
+				order by r.shop_review_num desc)aa)bb
+        <![CDATA[where rnum>=#{startRow} and rnum<=#{endRow}]]>
+	</select>
+	
+	<!-- 리뷰글 상세 가져오기 -->
+	<select id="re_desc" parameterType="int" resultType="shopReviewBoardVo">
+		select shop_review_content,shop_review_file_filename
+		from tb_shop_review aa left outer join tb_shop_review_file bb
+		on aa.shop_review_num=bb.shop_review_num 
+		where aa.shop_review_num=#{value}
+	</select>
+	
+	<!-- 문의게시판 1~10번글 가져오기 -->
+	<select id="qnalist" parameterType="hashmap" resultType="shopQnaBoardVo">
+		select * 
+		from(select aa.*,rownum rnum 
+			from(select q.SHOP_QNA_NUM,q.SHOP_QNA_TITLE,q.SHOP_QNA_CONTENT,q.SHOP_QNA_W_DATE,q.SHOP_QNA_HIT,q.SHOP_ITEM_CODE,q.MEMBER_PRIVACY_ID,c.shop_qna_comm_content,c.shop_qna_comm_w_date 
+				from tb_shop_qna q left outer join tb_shop_qna_comm c on q.SHOP_QNA_NUM=c.SHOP_QNA_NUM 
+					where q.SHOP_ITEM_CODE=#{item_code}
+					<if test="keyword!=null and keyword!=''">
+					and shop_qna_title like '%'||#{keyword}||'%'
+					</if>
+				 order by q.shop_qna_num desc)aa)bb
+         <![CDATA[where rnum>=#{startRow} and rnum<=#{endRow}]]>
+	</select>
+	
+	<select id="pagingList" parameterType="hashmap" resultType="shopReviewBoardVo">
+		select * from(select aa.*,rownum rnum 
+		from(select * from tb_shop_review where shop_item_code=#{code} order by shop_review_num desc)aa)
+    	<![CDATA[where rnum>=#{startRow} and rnum<=#{endRow}]]>
+	</select>
+	
+	<select id="getQnaComm" parameterType="int" resultType="shopQnaCommVo">
+		select * from tb_shop_qna_comm where shop_qna_num=#{value}
+	</select>
+	  
+	<select id="qnaPagingList" parameterType="hashmap" resultType="shopQnaBoardVo">
+		select * from
+			(select aa.*,rownum rnum from
+				(select * from tb_shop_qna 
+				<where>
+					<if test="keyword !=null and keyword !=''">
+						shop_qna_title like '%'||#{keyword}||'%' or shop_qna_content like '%'||#{keyword}||'%'
+					</if>
+						and shop_item_code=#{code} order by shop_qna_num desc)aa)
+				</where>
+    	<![CDATA[where rnum>=#{startRow} and rnum<=#{endRow}]]>
+	</select>
+	
+	
+	
+</mapper>

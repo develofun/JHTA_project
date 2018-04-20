@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.ItemSetMapper">
+	<select id="itemSetView" parameterType="hashmap" resultType="itemsetMainViewVo">
+		 select * 
+		 from (select list.*,rownum r 
+		 		from (select distinct c.ITEM_CODE_NUM,c.ITEM_CODE_SETNAME,c.ITEMSET_CODE_PRICE,c.ITEMSET_CODE_MAINIMG,c.ITEMSET_CODE_REGDATE 
+		 				from TB_ITEMSET_CODE c,TB_ITEMSET_INFO i, TB_shop_item s 
+		 				where c.ITEM_CODE_NUM=i.ITEM_CODE_NUM and i.shop_item_code=s.shop_item_code(+) and c.ITEMSET_CODE_CONDITION='sale' and
+		 					  c.ITEMSET_CODE_QUANTITY>0
+		<if test="category!=null">
+			and c.ITEMSET_CODE_CATEGORY=#{category}
+		</if>
+		<if test="search!=null">
+			and (c.ITEM_CODE_SETNAME like '%'||#{search}||'%' or s.shop_item_name like '%'||#{search}||'%')
+		</if>
+		order by 
+		<if test="method=='new'">
+			c.ITEMSET_CODE_REGDATE desc
+		</if>
+		<if test="method=='lowPrice'">
+			c.ITEMSET_CODE_PRICE asc
+		</if>
+		<if test="method=='highPrice'">
+			c.ITEMSET_CODE_PRICE desc
+		</if>
+		)list) <![CDATA[where r>=#{startRow} and r<=#{endRow}]]>
+	</select>
+	<select id="itemSetCount" resultType="int" parameterType="hashmap">
+		select count(cnt.cc) from
+		(select c.ITEM_CODE_NUM cc from TB_ITEMSET_CODE c,TB_ITEMSET_INFO i, TB_shop_item s
+		where c.ITEM_CODE_NUM=i.shop_item_code and i.shop_item_code=s.shop_item_code and c.ITEMSET_CODE_CONDITION='sale'
+		<if test="category!=null">
+			and c.ITEMSET_CODE_CATEGORY=#{category}
+		</if>
+		<if test="search!=null">
+			and (c.ITEM_CODE_SETNAME like '%'||#{search}||'%' or s.shop_item_name like '%'||#{search}||'%')
+		</if>
+		)cnt
+	</select>
+	<select id="itemsetDetail" parameterType="int" resultType="tbItemsetCodeVo">
+		select ITEMSET_CODE_MAINIMG,ITEM_CODE_NUM,ITEM_CODE_SETNAME, ITEMSET_CODE_PRICE,ITEMSET_CODE_QUANTITY from Tb_Itemset_Code where ITEM_CODE_NUM=#{value}
+	</select>
+	<select id="itemsetInfo" parameterType="int" resultType="tbItemsetInfoVo">
+		select * from tb_itemset_info where ITEM_CODE_NUM=#{value}
+	</select>
+	<select id="itemsetSubImg" parameterType="int" resultType="String">
+		select itemset_img_imgaddr from Tb_Itemset_Img where tb_itemset_info=#{value} order by itemset_img_num desc
+	</select>
+	<select id="recMainMd" resultType="tbItemsetMdrecVo">
+		select * from (select md.*,rownum r from 
+		(select m.mdrec_num,c.ITEM_CODE_NUM,m.MDREC_PTATION,c.ITEMSET_CODE_MAINIMG
+		from TB_ITEMSET_MDREC m, TB_ITEMSET_CODE c where c.ITEM_CODE_NUM=m.ITEM_CODE_NUM)md)
+		where <![CDATA[r<4]]>
+	</select>
+	
+	<insert id="itemsetBasket" parameterType="tbItemsetCartVo">
+		insert into TB_ITEMSET_CART values(seq_itemset_cartnum.nextval,#{itemset_cart_order_qty},
+		#{itemset_cart_price},#{itemset_code_num},#{member_privacy_id})
+	</insert>
+	<select id="itemSetJoinList" parameterType="int" resultType="itemsetShopJoinVo">
+		select * from tb_shop_item i,TB_ITEMSET_INFO info,TB_SHOP_ITEM_SUBIMG img 
+		where info.SHOP_ITEM_CODE=i.SHOP_ITEM_CODE and info.SHOP_ITEM_CODE=img.SHOP_ITEM_CODE and 
+		info.ITEM_CODE_NUM=#{value}
+	</select>
+	<insert id="itemsetInterest" parameterType="tbItemsetJjimVo">
+		insert into TB_ITEMSET_JJIM values(seq_itenset_jjimnum.nextval,
+		#{item_code_num},#{member_privacy_id})
+	</insert>
+	<select id="itemsetOrder" parameterType="int" resultType="itemsetOrderVo">
+		select item_code_setname,itemset_code_mainimg,item_code_num from tb_itemset_code where item_code_num=#{value}
+	</select>
+	<insert id="paymentInsert" parameterType="tbItemsetPaymentProductVo">
+		insert into TB_ITEMSET_PAYMENT_PRODUCT values(seq_itemset_payment.nextval,#{shop_payment_ordernum},
+		#{itemset_payment_product_qty},#{itemset_payment_product_price},#{itemset_code_num})
+	</insert>
+	<update id="itemsetUpdate" parameterType="hashmap">
+		update Tb_Itemset_Code set ITEMSET_CODE_QUANTITY=ITEMSET_CODE_QUANTITY-#{qty} where ITEM_CODE_NUM=#{itemCode}
+	</update>
+	<!-- 
+	<delete id="itemsetInterestDelete" parameterType="array">
+		delete from TB_ITEMSET_JJIM
+		<foreach collection="array" open="where" separator="and">
+			ITEMSET_JJIM_num=#{array}
+		</foreach>
+	</delete>
+	 -->
+	 <select id="subImgList" parameterType="int" resultType="tbItemsetImgVo">
+	 	select * from TB_ITEMSET_IMG where ITEM_CODE_NUM=#{value}
+	 </select>
+</mapper>

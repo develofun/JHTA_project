@@ -1,0 +1,82 @@
+@CHARSET "UTF-8";
+
+#header {
+	height: 100px;
+}
+
+#logo {
+	weight: 70px;
+	height: 70px;
+	float: left;
+	position: relative;
+	margin-left: 330px;
+	left: 60px;
+	top: 15px;
+}
+
+#menu {
+	float: left;
+	left: 160px;
+	top: 60px;
+	position: relative;
+}
+
+#menu a {
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#menu a:hover {
+	color: #D5D5D5;
+}
+
+#member_menu {
+	float: right;
+	right: 380px;
+	top: 10px;
+	position: relative;
+}
+
+#member_menu a {
+	color: black;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+#member_login {
+	float: right;
+	top: 50px;
+	position: relative;
+	margin-right: 200px;
+}
+
+#btn_header_login {
+	background-color: #F6F6F6; /* 배경색상 */
+	border: 1px solid #C0C0C0; /* 테두리 */
+	color: #666666; /* 색상 */
+	text-align: center; /* 텍스트정렬 */
+	text-decoration: none; /* 텍스트장식 */
+	display: inline-block;
+	font-size: 10px;
+	height: 34px;
+	width: 80px;
+	float: right;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+
+#header #member_login #btn_header_logout {
+	background-color: #F6F6F6; /* 배경색상 */
+	border: 1px solid #C0C0C0; /* 테두리 */
+	color: #666666; /* 색상 */
+	text-align: center; /* 텍스트정렬 */
+	text-decoration: none; /* 텍스트장식 */
+	display: inline-block;
+	font-size: 10px;
+	height: 34px;
+	width: 80px;
+	float: right;
+	margin-left: 10px;
+	border-radius: 5px;
+}

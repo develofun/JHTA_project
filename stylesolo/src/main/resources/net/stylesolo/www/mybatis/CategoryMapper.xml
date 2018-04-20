@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.CategoryMapper">
+	<resultMap type="shopDivisionVo" id="ShopDivision">
+		<result property="division_num" column="division_num"/>
+		<result property="division_name" column="division_name"/>
+		<result property="category_num" column="category_num"/>
+		<collection property="list" ofType="shopSectionVo">
+			<result property="section_num" column="section_num"/>
+			<result property="section_name" column="section_name"/>
+			<result property="division_num" column="division_num"/>
+		</collection>
+	</resultMap>
+	<select id="main_new_list" resultType="shopItemVo">
+		select bb.* from 
+  		(select aa.*,rownum rnum from 
+    	(select * from TB_shop_item 
+        order by shop_item_regdate desc) 
+      	aa) bb 
+		<![CDATA[ where rnum>=1 and rnum<=4 ]]>
+	</select>
+	<select id="categoryView" parameterType="hashmap" resultType="shopCategoryVo">
+		 select * 
+		 from (select cc.*,rownum r 
+			  from (select cb.dc,cb.code,cb.name,cb.saleprice,cb.mainimg,cb.regdate,sum(p.shop_payment_item_order_qty)qty 
+			 	   from	(select distinct ca.dc,ca.code,ca.name,ca.saleprice,ca.mainimg,ca.regdate 
+			 	         from (select i.SHOP_ITEM_DISCOUNTRATE dc,i.shop_item_code code,i.shop_item_name name,i.shop_item_saleprice saleprice,i.shop_item_regdate regdate,
+									  s.shop_item_mainimg_imgname mainimg,t.item_tag_name
+							   from tb_shop_item i,tb_shop_item_subimg s,tb_shop_item_tag t
+							   where i.shop_item_code(+)=s.shop_item_code and i.shop_item_code=t.shop_item_code and i.SHOP_ITEM_STOCK>0								
+								<if test="categoryStart!=null">
+									<![CDATA[and i.shop_item_code>=#{categoryStart} and i.shop_item_code<=#{categoryEnd}]]>
+								</if>
+								<if test="search!=null">
+									and (i.shop_item_name like '%'||#{search}||'%' or t.item_tag_name like '%'||#{search}||'%')
+								</if>
+								) ca
+								) cb, tb_shop_payment_product p 
+							where cb.code=p.SHOP_ITEM_CODE(+) 
+							group by cb.code,cb.name,cb.saleprice,cb.mainimg,cb.regdate,cb.dc 
+							order by
+							<if test="method=='new'">
+								cb.regdate desc
+							</if>
+							<if test="method=='best'">
+								qty desc
+							</if>
+							<if test="method=='lowPrice'">
+								cb.saleprice asc
+							</if>
+							<if test="method=='discountRate'">
+								cb.dc desc
+							</if>
+							) cc
+						)
+					where <![CDATA[ r>=#{startRow} and r<=#{endRow} ]]>
+	</select>
+	<select id="cateItemCount" parameterType="hashmap" resultType="int">
+		select count(*) from
+		(select distinct ca.code from
+		(select i.shop_item_code code,i.shop_item_name name,i.shop_item_saleprice saleprice,i.shop_item_regdate,
+		s.shop_item_mainimg_imgname mainimg,sum(p.shop_payment_item_order_qty)qty,t.item_tag_name
+		from tb_shop_item i,tb_shop_item_subimg s,tb_shop_payment_product p,tb_shop_item_tag t
+		where i.shop_item_code=s.shop_item_code and i.shop_item_code=p.shop_item_code and i.shop_item_code=t.shop_item_code
+		group by i.shop_item_code,i.shop_item_name,i.shop_item_saleprice,i.shop_item_regdate,
+		s.shop_item_mainimg_imgname,t.item_tag_name having i.shop_item_saleprice>=0
+			<if test="categoryStart!=null">
+				and <![CDATA[i.shop_item_code>=#{categoryStart} and i.shop_item_code<=#{categoryEnd}]]>
+			</if>
+			<if test="search!=null">
+				and (i.shop_item_name like '%'||#{search}||'%' or t.item_tag_name like '%'||#{search}||'%')
+			</if>
+		)ca)cb
+	</select>
+	
+	<select id="sectionList" parameterType="int" resultMap="ShopDivision">
+		select * from TB_SHOP_SECTION s,TB_SHOP_division d where s.division_num=d.division_num
+		and d.category_num=#{value} and d.category_num>0 order by d.division_num asc
+	</select>
+	<select id="allList" resultMap="ShopDivision">
+		select * from TB_SHOP_SECTION s,TB_SHOP_division d where s.division_num=d.division_num
+		and d.category_num>0 order by d.division_num asc
+	</select>
+	<select id="categoryImg" parameterType="int" resultType="net.stylesolo.www.vo.ShopCategoryImgVo">
+		select * from tb_shop_category where category_num=#{value}
+	</select>
+</mapper>

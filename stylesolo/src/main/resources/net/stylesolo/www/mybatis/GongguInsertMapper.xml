@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.stylesolo.www.mybatis.GongguInsertMapper">
+	<insert id="insert" parameterType="tbGongguInsertVo">
+		insert into tb_gonggu_insert values(tb_gonggu_insert_seq.nextval,#{gonggu_insert_title},#{gonggu_insert_content},
+		#{gonggu_insert_category},#{gonggu_insert_price},#{gonggu_insert_minnum},#{gonggu_insert_maxnum},#{gonggu_insert_openingdate},
+		#{gonggu_insert_closingdate},#{gonggu_insert_bankname},#{gonggu_insert_account},sysdate,#{member_privacy_id},null)
+	</insert>
+	<!-- joininfo와 buyinfo 리스트출력 시 페이징처리하기 쿼리..0406 -->
+	<select id="gonggu_info" parameterType="hashmap" resultType="tbGongguInfoVo">
+		select * from
+		(select aa.*,rownum rnum from
+			(select * from tb_gonggu_insert T join tb_gonggu_img G
+				on T.gonggu_insert_num=G.gonggu_insert_num
+				<where>
+					<if test="id!=null">
+						T.member_privacy_id=#{id}
+					</if>
+				</where>
+				order by T.gonggu_insert_num desc)aa)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	<!-- joininfo와 buyinfo 리스트출력 시 페이징처리하기 쿼리..0406 -->
+	<select id="gonggu_buy_info" parameterType="hashmap" resultType="tbGongguBuyInfoVo">
+		select * from
+		(select aa.*,rownum rnum from
+			(select * from tb_gonggu_insert T join tb_gonggu_img G
+				on T.gonggu_insert_num=G.gonggu_insert_num
+					join tb_gonggu_buy Y
+					on T.gonggu_insert_num=Y.gonggu_insert_num
+					<where>
+						<if test="id!=null">
+							Y.member_privacy_id=#{id}
+						</if>
+					</where>
+				order by T.gonggu_insert_num desc)aa)
+		<![CDATA[ where rnum>=#{startRow_buy} and rnum<=#{endRow_buy} ]]>
+	</select>
+	<!-- joininfo와 buyinfo 리스트갯수 뽑는 쿼리 -->
+	<select id="gonggu_info_cnt" parameterType="hashmap" resultType="int">
+		select count(*) from tb_gonggu_insert where member_privacy_id=#{id}
+	</select>
+	<select id="gonggu_buy_info_cnt" parameterType="hashmap" resultType="int">
+		select count(*) from tb_gonggu_buy where member_privacy_id=#{id}
+	</select>
+	
+	<!-- pk번호로 해당 공구데이터만 받아오기 (공구insert테이블 + 공구img테이블)-->
+	<select id="gonggu_detail" parameterType="int" resultType="tbGongguInfoVo">
+		SELECT * FROM tb_gonggu_insert T JOIN tb_gonggu_img G
+		ON T.gonggu_insert_num=G.gonggu_insert_num
+  		where T.gonggu_insert_num=#{value}
+	</select>
+	<insert id="gonggu_buy" parameterType="tbGongguBuyVo">
+		insert into tb_gonggu_buy values(tb_gonggu_buy_seq.nextval,#{gonggu_buy_price},
+		#{gonggu_buy_getnum},sysdate,#{gonggu_insert_num},#{member_privacy_id})
+	</insert>
+	
+	<!-- 공구 구매버튼 클릭 시 해당 유저정보 불러오기 -->
+	<select id="gonggu_ordering_user_info" parameterType="String" resultType="tbMemberPrivacyVo">
+		select * from tb_member_privacy where member_privacy_id=#{value}
+	</select>
+	<!-- 공구 구매버튼 클릭 시 해당 공구정보 불러오기 -->
+	<select id="gonggu_ordering_info" parameterType="int" resultType="tbGongguInsertVo">
+		select * from tb_gonggu_insert where gonggu_insert_num=#{value}
+	</select>
+	<!-- 공구 구매버튼 클릭 시 해당 공구이미지vo 불러오기 -->
+	<select id="gonggu_ordering_img_info" parameterType="int" resultType="tbGongguImgVo">
+		select * from tb_gonggu_img where gonggu_insert_num=#{value}
+	</select>
+	<!-- ordering페이지 확인후 최종 구매버튼 클릭 시 주문완료페이지에 출력할 정보들 (member+gonggu_insert테이블)////////수정중 -->
+	<select id="gonggu_ordering_result" parameterType="int" resultType="tbMemberInfoGongguInfoVo">
+		SELECT * FROM tb_gonggu_insert T JOIN tb_member_privacy Y
+		ON T.member_privacy_id=Y.member_privacy_id
+    	where T.gonggu_insert_num=#{value}
+	</select>
+	
+	<!-- 공구 구매시 구매갯수만큼 데이터값 -시키기 -->
+	<update id="gonggu_buy_cntUpdate" parameterType="hashmap">
+		update tb_gonggu_insert set gonggu_insert_maxnum=gonggu_insert_maxnum-#{getnum} where gonggu_insert_num=#{insertnum}
+	</update>
+	
+	<!-- 공구디테일페이지 구매자리스트뽑기용 select -->
+	<select id="gonggu_buy_list" parameterType="int" resultType="tbGongguBuyVo">
+		select * from tb_gonggu_buy where gonggu_insert_num=#{value} order by gonggu_buy_num desc
+	</select>
+	<select id="gonggu_buyer_cnt" parameterType="int" resultType="int">
+		select count(member_privacy_id) from tb_gonggu_buy where gonggu_insert_num=#{value}
+	</select>
+	<!-- 공구디테일댓글 -->
+	<select id="gonggu_reply_list" parameterType="int" resultType="tbGongguReplyVo">
+		select * from tb_gonggu_reply where GONGGU_INSERT_NUM=#{value} order by GONGGU_REPLY_DATE asc
+	</select>
+	<!-- 공구디테일댓글추가 -->
+	<insert id="gonggu_reply_insert" parameterType="tbGongguReplyVo">
+		insert into tb_gonggu_reply values(tb_gonggu_reply_seq.nextval,#{gonggu_reply_comment},sysdate,#{member_privacy_id},#{gonggu_insert_num})
+	</insert>
+	<select id="gonggu_reply_cnt" parameterType="int" resultType="int">
+		select count(gonggu_reply_num) from tb_gonggu_reply where gonggu_insert_num=#{value}
+	</select>
+	
+			
+	<!-- 공구리스트출력(회원공구) + 페이징처리 + dday추가(0410) -->
+	<select id="gonggu_member_list" parameterType="hashmap" resultType="tbGongguListValueVo">
+		select * from
+		(select aa.*,rownum rnum from
+			(select T.gonggu_insert_num,T.gonggu_insert_title,T.gonggu_insert_content,G.gonggu_img_sname,T.gonggu_insert_maxnum,T.gonggu_insert_closingdate-sysdate day
+			 from tb_gonggu_insert T join tb_gonggu_img G
+				on T.gonggu_insert_num=G.gonggu_insert_num
+				
+				<where>
+					<if test="keyword!=null">
+						T.gonggu_insert_title like '%'||#{keyword}||'%' or T.gonggu_insert_content like '%'||#{keyword}||'%'
+					</if>
+				</where>
+				
+				order by T.gonggu_insert_closingdate desc)aa)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	
+	<!-- 카테고리 선택 후 리스트출력 + (페이징처리,검색기능) + dday추가(0410) -->
+	<select id="gonggu_member_list_category" parameterType="hashmap" resultType="tbGongguListValueVo">
+		select * from
+		(select aa.*,rownum rnum from
+			(select T.gonggu_insert_num,T.gonggu_insert_title,T.gonggu_insert_content,G.gonggu_img_sname,T.gonggu_insert_maxnum,T.gonggu_insert_closingdate-sysdate day
+			from tb_gonggu_insert T join tb_gonggu_img G
+				on T.gonggu_insert_num=G.gonggu_insert_num
+				
+				<where>
+					<if test="category!=null">
+						T.gonggu_insert_category=#{category}
+					</if>
+					<if test="keyword!=null">
+						T.gonggu_insert_title like '%'||#{keyword}||'%' or T.gonggu_insert_content like '%'||#{keyword}||'%'
+					</if>
+				</where>
+				
+				order by T.gonggu_insert_closingdate desc)aa)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	
+	<!-- 공구리스트출력(카테고리별출력하기) -->
+	<select id="gonggu_list_category" parameterType="String" resultType="tbGongguInfoVo">
+		SELECT * FROM tb_gonggu_insert T JOIN tb_gonggu_img G
+		ON T.gonggu_insert_num=G.gonggu_insert_num
+		where T.gonggu_insert_category like #{value}
+		order by T.gonggu_insert_num desc
+	</select>
+	
+	<!-- 공구리스트갯수 -->
+	<select id="get_member_list_count" parameterType="hashmap" resultType="int">
+		select count(*) from tb_gonggu_insert
+		
+		<where>
+			<if test="keyword!=null">
+				gonggu_insert_title like '%'||#{keyword}||'%' or gonggu_insert_content like '%'||#{keyword}||'%'
+			</if>
+		</where>
+		 
+	</select>
+	<!-- 공구리스트갯수(카테고리별 검색시) -->
+	<select id="get_member_list_category_count" parameterType="hashmap" resultType="int">
+		select count(*) from tb_gonggu_insert
+		
+		<where>
+			<if test="category!=null">
+				gonggu_insert_category=#{category}
+			</if>
+			<if test="keyword!=null">
+				gonggu_insert_title like '%'||#{keyword}||'%' or gonggu_insert_content like '%'||#{keyword}||'%'
+			</if>
+		</where>
+		 
+	</select>
+	
+	<!-- 전체공구리스트중에서 베스트3뽑기(판매수량순으로) + 수량매진,기간마감 예외처리(0410) -->
+	<select id="get_gonggu_best" resultType="tbGongguBestListVo">
+		SELECT * FROM
+		(SELECT Y.gonggu_insert_num,sum(Y.gonggu_buy_getnum) 
+    		FROM tb_gonggu_buy Y join tb_gonggu_insert T
+    		ON Y.gonggu_insert_num=T.gonggu_insert_num
+      		WHERE ((T.gonggu_insert_closingdate-sysdate) >= 0) and (T.gonggu_insert_maxnum > 0)
+			GROUP BY Y.gonggu_insert_num
+			ORDER BY SUM(Y.gonggu_buy_getnum) DESC)
+			<![CDATA[ WHERE ROWNUM<4 ]]>
+	</select>
+	<!-- get_gonggu_best쿼리로 뽑은 gonggu_insert_num으로 해당 공구정보 불러오는 쿼리 -->
+	<select id="get_gonggu_best_info" parameterType="int" resultType="tbGongguInfoVo">
+		SELECT * FROM 
+    	tb_gonggu_insert T JOIN tb_gonggu_img G
+		ON T.gonggu_insert_num=G.gonggu_insert_num
+		where T.gonggu_insert_num=#{value}
+	</select>
+	
+	<!-- 공구권한신청테이블에 인서트하기 -->
+	<insert id="gonggu_upload_request" parameterType="tbGongguUploadRequestVo">
+		insert into tb_gonggu_upload_request values(tb_gonggu_upload_request_seq.nextval,'공동구매',#{gonggu_upload_request_reason},
+		sysdate,#{member_privacy_id})
+	</insert>
+	
+</mapper>

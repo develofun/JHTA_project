@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+	#wrap {width:200px;height:1000px;margin:auto;float:left;}
+	#wrap #member_menu {width:200px;height:1000px;}
+	#wrap #member_menu a {color:black;font-size: 14px;text-decoration: none;margin:20px;}
+	
+	#wrap #member_menu #member_logo {width:200px;height:200px;float:left;margin-left:-20px;}
+	#wrap #member_menu #menu1 {width:200px;height:150px;float:left;background-color: #EAEAEA;}
+	#wrap #member_menu #menu2 {width:200px;height:150px;float:left;background-color: #EAEAEA;}
+	#wrap #member_menu #menu3 {width:200px;height:150px;float:left;background-color: #EAEAEA;}
+	#wrap #member_menu #menu4 {width:200px;height:150px;float:left;background-color: #EAEAEA;}
+	#wrap #member_menu #menu5 {width:200px;height:150px;float:left;background-color: #EAEAEA;}
+	
+	h3 {background-color: white;right:20px;}

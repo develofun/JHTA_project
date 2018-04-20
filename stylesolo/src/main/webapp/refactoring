@@ -1,0 +1,19 @@
+#8/30(수)
+ 1) Member
+   - 로그인 부분 수정
+   - 계정 찾기 부분 수정
+   - 기수정 부분에 오류 발생 수정
+
+#8/29(화)
+ 1) MemberController
+   - Form page 이동 메소드 통합 (moveFormPage) : pathvariable 이용
+   - header file 수정 : form page link
+   - 회원 가입 관련 코드 변경
+ 2) root-context
+   - properties location 설정 및 jdbc value mapping
+   - mybatis configLocation -> mapperLocations로 변경
+   - typealiaspackage 설정 -> mybatis mapper 파일 type value 변경
+   - 트랜잭션 설정 : 데이터 exception에 대한 rollback
+ 3) 기타
+   - mybatis-config 파일 삭제
+   - rest api 규칙 설정

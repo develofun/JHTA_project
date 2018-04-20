@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+
+.result_table {display:table;}
+.result_tr {display:table-row;}
+.result_td {display:table-cell;}

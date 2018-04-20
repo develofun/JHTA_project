@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+table.member_update {
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	margin: 20px 10px;
+}
+
+table.member_update th {
+	width: 180px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: center;
+	border-bottom: 1px solid #ccc;
+}
+
+table.member_update td {
+	width: 700px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+
+.update_textboxStyle {
+	height: 18px;
+	width: 120px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+
+#wrap_update {
+	width: 740px;
+	height: 900px;
+	float:left;
+	margin-left:40px;
+}
+
+.check_error {
+	color:red;
+}
+.check_ok {
+	color:green;
+}
